@@ -1,43 +1,62 @@
 <template>
   <div class="search">
-  <mt-search autofocus v-model="value" :result="filterResult"></mt-search>
+    <search
+    @result-click="resultClick"
+    :results="filterResult"
+    v-model="value"
+    @on-change="getResult"
+    position="absolute"
+    ref="search"></search>
   </div>
 </template>
 
 <script>
+import { Search, Group, Cell, XButton } from 'vux'
 export default {
+  components:{
+    Search,
+    Group,
+    Cell,
+    XButton
+  },
   name: 'hello',
+  methods: {
+    setFocus () {
+      this.$refs.search.setFocus()
+    },
+    resultClick (item) {
+      window.alert('you click the result item: ' + JSON.stringify(item))
+    },
+    getResult () {
+      var array=this.results.filter(value=> new RegExp(this.value, 'i').test(value));
+      this.filterResult=getResult(array);
+    }  
+  },
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App',
-      SearchBackground:'search-background',
-      searchListTop:'searchListTop',
-      value: '搜索',
-      defaultResult:[
-        'Apple',
-        'Banana',
-        'Orange',
-        'Durian',
-        'Lemon',
-        'Peach',
-        'Cherry',
-        'Berry',
-        'Core',
-        'Fig',
-        'Haw',
-        'Melon',
-        'Plum',
-        'Pear',
-        'Peanut',
-        'Other'
-      ]
-    }
-  },
-  computed: {
-    filterResult() {
-      return this.defaultResult.filter(value => new RegExp(this.value, 'i').test(value));
+      results:[
+      'Apple',
+      'Banana',
+      'Orange',
+      'Durian',
+      'Lemon',
+      'Peach',
+      'Cherry',
+      'Berry'],
+      value: 'test',
+      filterResult:[],
     }
   }
+}
+//设置搜索的内容
+function getResult (val) {
+  let rs = []
+  for (let i = 0; i < val.length; i++) {
+    rs.push({
+      title: `${val[i]}`
+    })
+  }
+  return rs
 }
 </script>
 
@@ -49,17 +68,5 @@ export default {
   }
   .search>div{
     text-align: left;
-  }
-  //mint-ui样式改变  类替换
-  //1.搜索框背景
-  .mint-searchbar{
-    background-color: @colorTheme;
-  }
-  .mint-searchbar-cancel{
-    color: @colorddd;
-  }
-  .mint-search-list{
-    padding-top: 2.5rem;
-    z-index: 9999;
   }
 </style>

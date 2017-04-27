@@ -1,35 +1,30 @@
 <template>
 	<div class="footbar">
-		<mt-navbar v-model="selected" >
-		    <mt-tab-item :id="item.name" :value="item.name" v-for="item in items" :key="item.id" :class="paddingTab">
-		    <img slot="icon" :src="item.icon">
-		    {{item.name}}
-		    </mt-tab-item>
-        </mt-navbar>
+	    <tabbar>
+      <tabbar-item show-dot>
+        <img slot="icon" src="../../static/imags/home1.png" >
+        <span slot="label">主页</span>
+      </tabbar-item>
+      <tabbar-item selected link="#">
+        <img slot="icon" src="../../static/imags/shopping1.png" >
+        <span slot="label">购物车</span>
+      </tabbar-item>
+      <tabbar-item badge="2">
+        <img slot="icon" src="../../static/imags/my1.png" >
+        <span slot="label">我的</span>
+      </tabbar-item>
+    </tabbar>
 </div>
 </template>
 
 <script type="text/javascript">
+import { Tabbar , TabbarItem} from 'vux'
   export default {
-  	 name:'footbar',
+     components:{ Tabbar , TabbarItem },
   	 data () {
   	 	return {
   	 		selected:"主页",
-  	 		paddingTab:'padding-tab',
-  	 		items:[{
-  	 			id:1,
-  	 			name:'主页',
-  	 			icon:"../../static/imags/home1.png"
-  	 		},{
-  	 			id:2,
-  	 			name:"购物车",
-  	 			icon:"./../static/imags/shopping1.png"
-  	 		},
-  	 		{
-  	 			id:3,
-  	 			name:'我的',
-  	 			icon:"./../static/imags/my1.png"
-  	 		}]
+  	 		paddingTab:'padding-tab'
   	 	}
   	 }
 
@@ -41,11 +36,5 @@
   .footbar{
   	width: 100%;
   	bottom: 2px;
-  }
-  .padding-tab{
-  	padding: 0.25rem 0;
-  } 
-  .footbar .mint-navbar .mint-tab-item.is-selected{
-     color: #f53333;
   }
 </style>

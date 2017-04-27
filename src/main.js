@@ -17,4 +17,3 @@ new Vue({
   template: '<App/>',
   components: { App }
 })
-$.init();

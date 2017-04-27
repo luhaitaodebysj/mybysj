@@ -1,25 +1,32 @@
 <template>
-<div class="baner">
-	<mt-swipe :auto="4000"
-          :prevent="true"
-          :show-indicators="true">
-	<mt-swipe-item><img src="../assets/imags/1.jpg" height="240" width="427"></mt-swipe-item>
-	<mt-swipe-item><img src="../assets/imags/2.jpg" height="240" width="427"></mt-swipe-item></mt-swipe-item>
-	<mt-swipe-item><img src="../assets/imags/3.jpg" height="240" width="427"></mt-swipe-item></mt-swipe-item>
-</mt-swipe>
-</div>
+  <div>
+    <swiper loop auto :list="imglist"></swiper>
+  </div>
 </template>
 
-<script type="text/javascript">
-  export default {
-  	 name:'baner'
-  }
-	
-</script>
+<script>
+import { Swiper } from 'vux'
 
-<style lang="less">
-.baner{
-	height:8rem; 
+const baseList = [{
+  url: 'http://m.baidu.com',
+  img: 'https://static.vux.li/demo/1.jpg'
+}, {
+  url: 'http://m.baidu.com',
+  img: 'https://static.vux.li/demo/2.jpg'
+}, {
+  url: 'jhttp://m.baidu.com',
+  img: 'https://static.vux.li/demo/3.jpg'
+}]
+export default {
+  components: {
+    Swiper
+  },
+  data () {
+    return {
+      imglist: baseList
+    }
+  }
 }
-	
+</script>
+<style scoped>
 </style>
