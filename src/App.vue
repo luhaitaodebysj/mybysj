@@ -1,12 +1,15 @@
 <template>
   <div id="app">
     <router-view></router-view>
+    <footbar></footbar> 
   </div>
 </template>
 
 <script>
+import Footbar from './components/Footbar.vue'
 export default {
-  name: 'app'
+  name: 'app',
+  components:{Footbar}
 }
 </script>
 

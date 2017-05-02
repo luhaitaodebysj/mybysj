@@ -7,9 +7,6 @@
     <Baner></Baner>
     <Recommd></Recommd>
   </div>
-  <div id="footer">
-   <Footbar></Footbar> 
- </div>
 </div>
 </template>
 
