@@ -29,4 +29,5 @@ function setPartHeight(){
     var mainHeight = $(window).height()-bottomHeight;
     $("#login").css('height',mainHeight);
     $("#personal").css('height',mainHeight);
+    $("#list").css('height',mainHeight);
 }
