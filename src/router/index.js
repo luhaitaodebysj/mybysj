@@ -4,7 +4,6 @@ import Home from '../page/home/Home'
 import Login from '../page/login/login'
 import Shop from '../page/shop/shop.vue'
 import Personal from '../page/personal/personal.vue'
-import List from '../page/list/list.vue'
 
 Vue.use(Router)
 
@@ -34,11 +33,6 @@ export default new Router({
     path: '/personal',
     name: 'personal',
     component: Personal
-  },
-   {
-    path: '/list',
-    name: 'list',
-    component: List
   }
   ]
 })

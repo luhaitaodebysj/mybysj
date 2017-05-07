@@ -89,12 +89,10 @@ export default {
     }
   },
   created:function() {
-  	setHeight();
   },
   mounted:function() {
   	//当元素渲染出来后
   	setHeight();
-  	 
   }
 }
  setHeight();
