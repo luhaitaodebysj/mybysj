@@ -19,7 +19,7 @@ function resizeFontSize(){
 function setHeight(){
 	var totalHeight=$(window).height();
 	var headerHeight=$("#header").height();
-	var footHeight=$('#footer').height();
+	var footHeight=$('.footbar').height();
 	var bodyHeight=totalHeight-headerHeight-footHeight;
 	$("#body").css('height',bodyHeight);
 }
