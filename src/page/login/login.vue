@@ -1,37 +1,44 @@
 <template>
   <div class="login" id="login">
       <div class="login-header">
-         <a href="#"><</a>
+         <a href="#">&lt;</a>
       	 {{title}}
       </div>
      
      <div class="login-main">
      <div style="height:2rem;"></div>
      <div class="logo"></div>
-      <form action="" method="post" id="login-post">
+      <div id="login-post">
       	<div class="username">
       		<label></label>
-      		<input type="text" placeholder="请输入账号" name="username">
+      		<input type="text" placeholder="请输入账号" name="username" v-model="userName" />
       	</div>
       	<div class="password">
       		<label></label>
-      		<input type="text" placeholder="密码" name="password">
+      		<input type="password" placeholder="密码" name="password" v-model="password" />
       	</div>
-        <input class="loginBtn" type="button" value="登录"/>
-      </form>
+        <input class="loginBtn" type="button" value="登录" @click="login"/>
+      </div>
       </div>
   </div>
 </template>
 
 <script type="text/javascript">
 export default {
-  name: 'login',
   data () {
     return {
       msg: 'Welcome to Your Vue.js App',
-      title:'登录'
+      title:'登录',
+      userName:"",
+      password:""
+    }
+  },methods:{
+    login:function(){
+        return this.userName = userName;
+        this.password = password;
     }
   }
+
 
 
 }

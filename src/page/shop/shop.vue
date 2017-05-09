@@ -11,14 +11,14 @@
 	    				<ul>
 	    					<li class="shoppingDetailName">{{item.title}}</li>
 	    					<li></li>
-	    					<li>    
-	    						<group>
-	    							<x-number :name="title" :title="title"></x-number>
-	    						</group>
-	    					</li>
-	    					<li class="shoppingDetailNum">
+	    					<li class="shoppingDetailNum">    
 	    						<span>数量：x{{item.num}}</span>
 	    						<span>￥{{item.money}}</span>
+	    					</li>
+	    					<li>
+	    						<div class="jian" v-on:click="reduce">-</div>
+	    						<input type="text" class="num" v-model="goodsNum">
+	    						<div class="jia" v-on:click="add">+</div>
 	    					</li>
 	    				</ul>
 	    			</div>		
@@ -38,16 +38,12 @@
 	</div>
 </template>
 <script type="text/javascript">
-import {Group , XNumber,XSwitch } from 'vux'
 //初始化页面高度
 function setHeight() {
 	var height=$(window).height()-153;
 	$("#shopList").css('height',height);
 }
 export default {
-  components: {
-  	XNumber,Group,XSwitch
-  },
   name:'shop',
   data () {
     return {
@@ -87,6 +83,13 @@ export default {
       	money:555.00
       }]
     }
+  },methods:{
+     reduce:function(){
+     	this.goodsNum--;
+     },
+     add:function(){
+        this.goodsNum++;
+     }
   },
   created:function() {
   },
