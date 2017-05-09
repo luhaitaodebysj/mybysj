@@ -37,6 +37,36 @@ app.use('/api',apiRouter);
 
 var compiler = webpack(webpackConfig)
 
+var  LoginDb = require('../server/controller/users.js');
+var apirouter = express.Router() ;
+console.log(apirouter);
+apirouter.get('/user',function(req,res){
+   var username = req.query.username;
+   var password = req.query.password;
+   LoginDb(username,password);
+   console.log('接收了请求');
+   var j={'username':username,'password':password};
+   res.json(j);
+})
+
+app.post('/user',function(req,res){
+   var username;
+   var password;
+   var data="";
+   req.on("data",function(chunk){
+      data+=chunk;
+   })
+   req.on('end',function(){
+       data = JSON.parse(data);
+       username = data.username;
+       password = data.password;
+       LoginDb(username,password);
+       res.send("true");
+   })
+});
+
+
+
 var devMiddleware = require('webpack-dev-middleware')(compiler, {
   publicPath: webpackConfig.output.publicPath,
   quiet: true

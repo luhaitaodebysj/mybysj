@@ -7,7 +7,9 @@ import App from './App'
 import router from './router'
 import Axios from 'axios' 
 import common from './common/js/common.js'
+
 Vue.use(MintUi)
+Vue.prototype.$http = Axios;
 
 Vue.config.productionTip = false
 
