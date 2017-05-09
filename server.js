@@ -11,3 +11,8 @@ app.get('/login',function(req,res){
    var j={'username':username,'password':password};
    res.send(j);
 })
+app.get('./dist/index.html',function(req,res){
+	/*res.sendFile("index.html");*/
+	res.send(11111);
+	res.sendFile( __dirname + "/" + "index.html" );
+})

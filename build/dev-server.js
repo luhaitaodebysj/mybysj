@@ -21,6 +21,20 @@ var autoOpenBrowser = !!config.dev.autoOpenBrowser
 var proxyTable = config.dev.proxyTable
 
 var app = express()
+var LoginDb = require('../server/controller/users.js');
+var apiRouter = express.Router();
+//以下处理接口
+apiRouter.get('/user',function(req,res){
+  var username = req.query.username;
+  var password = req.query.password;
+  LoginDb(username,password);
+  var j={'username':username,'password':password};
+  res.send(j);
+})
+
+app.use('/api',apiRouter);
+
+
 var compiler = webpack(webpackConfig)
 
 var devMiddleware = require('webpack-dev-middleware')(compiler, {
@@ -79,8 +93,7 @@ devMiddleware.waitUntilValid(() => {
   _resolve()
 })
 
-var server = app.listen(port)
-
+var server = app.listen(port);
 module.exports = {
   ready: readyPromise,
   close: () => {

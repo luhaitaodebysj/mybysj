@@ -8,7 +8,7 @@
      <div class="login-main">
      <div style="height:2rem;"></div>
      <div class="logo"></div>
-      <form action="" method="post" id="login-post">
+      <form action="api/user" method="get" id="login-post">
       	<div class="username">
       		<label></label>
       		<input type="text" placeholder="请输入账号" name="username">
@@ -17,7 +17,7 @@
       		<label></label>
       		<input type="text" placeholder="密码" name="password">
       	</div>
-        <input class="loginBtn" type="button" value="登录"/>
+        <input class="loginBtn" type="submit" value="登录"/>
       </form>
       </div>
   </div>
