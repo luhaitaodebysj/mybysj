@@ -8,17 +8,17 @@
      <div class="login-main">
      <div style="height:2rem;"></div>
      <div class="logo"></div>
-      <form action="" method="post" id="login-post">
+      <div  id="login-post">
       	<div class="username">
       		<label></label>
-      		<input type="text" placeholder="请输入账号" name="username">
+      		<input type="text" placeholder="请输入账号" name="username" v-model="username">
       	</div>
       	<div class="password">
       		<label></label>
-      		<input type="text" placeholder="密码" name="password">
+      		<input type="password" placeholder="密码" name="password" v-model="password">
       	</div>
-        <input class="loginBtn" type="button" value="登录"/>
-      </form>
+        <input class="loginBtn" type="button" value="登录" @click="login"/>
+      </div>
       </div>
   </div>
 </template>
@@ -29,11 +29,26 @@ export default {
   data () {
     return {
       msg: 'Welcome to Your Vue.js App',
-      title:'登录'
+      title:'登录',
+      username:'',
+      password:''
+    }
+  },
+  methods:{
+    login:function(){
+      var me=this;
+      this.$http.get('/user',{
+        params:{
+        "username":me.username,
+        "password":me.password
+        }
+      }).then(function(res){
+        console.log(res);
+      }).catch(function(err){
+        console.log(err);
+      })
     }
   }
-
-
 }
 </script>
 
