@@ -1,21 +1,21 @@
 <template>
   <div class="login" id="login">
       <div class="login-header">
-         <a href="#">&lt;</a>
+         <a href="#"><</a>
       	 {{title}}
       </div>
      
      <div class="login-main">
      <div style="height:2rem;"></div>
      <div class="logo"></div>
-      <div id="login-post">
+      <div  id="login-post">
       	<div class="username">
       		<label></label>
-      		<input type="text" placeholder="请输入账号" name="username" v-model="userName" />
+      		<input type="text" placeholder="请输入账号" name="username" v-model="username">
       	</div>
       	<div class="password">
       		<label></label>
-      		<input type="password" placeholder="密码" name="password" v-model="password" />
+      		<input type="password" placeholder="密码" name="password" v-model="password">
       	</div>
         <input class="loginBtn" type="button" value="登录" @click="login"/>
       </div>
@@ -25,22 +25,30 @@
 
 <script type="text/javascript">
 export default {
+  name: 'login',
   data () {
     return {
       msg: 'Welcome to Your Vue.js App',
       title:'登录',
-      userName:"",
-      password:""
+      username:'',
+      password:''
     }
-  },methods:{
+  },
+  methods:{
     login:function(){
-        return this.userName = userName;
-        this.password = password;
+      var me=this;
+      this.$http.get('/user',{
+        params:{
+        "username":me.username,
+        "password":me.password
+        }
+      }).then(function(res){
+        console.log(res);
+      }).catch(function(err){
+        console.log(err);
+      })
     }
   }
-
-
-
 }
 </script>
 

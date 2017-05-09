@@ -23,6 +23,34 @@ var proxyTable = config.dev.proxyTable
 var app = express()
 var compiler = webpack(webpackConfig)
 
+var  LoginDb = require('../server/controller/users.js');
+var apirouter = express.Router() ;
+console.log(apirouter);
+apirouter.get('/user',function(req,res){
+   var username = req.query.username;
+   var password = req.query.password;
+   LoginDb(username,password);
+   console.log('接收了请求');
+   var j={'username':username,'password':password};
+   res.json(j);
+})
+
+app.post('/user',function(req,res){
+   var username;
+   var password;
+/*   req.on("data",function(chunk){
+      body+=chunk;
+   })
+   req.on('end',function(){
+       body=querstring.parse(body)
+   })*/
+   LoginDb(username,password);
+   var j={'username':username,'password':password};
+   res.json(j);
+});
+
+
+
 var devMiddleware = require('webpack-dev-middleware')(compiler, {
   publicPath: webpackConfig.output.publicPath,
   quiet: true
