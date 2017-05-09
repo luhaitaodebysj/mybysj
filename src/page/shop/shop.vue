@@ -16,9 +16,9 @@
 	    						<span>￥{{item.money}}</span>
 	    					</li>
 	    					<li>
-	    						<div class="jian" v-on:click="reduce">-</div>
+	    						<div class="reduce" v-on:click="reduce">-</div>
 	    						<input type="text" class="num" v-model="goodsNum">
-	    						<div class="jia" v-on:click="add">+</div>
+	    						<div class="add" v-on:click="add">+</div>
 	    					</li>
 	    				</ul>
 	    			</div>		
@@ -200,5 +200,22 @@ ul,li{
 		color:white;
 		border-radius: 4px;
 		line-height: 30px;
+	}
+	.reduce,.add{
+		width:30px;
+		height:30px;
+		float:left;
+		background:#EDEDED;
+		line-height:26px;
+		border:1px solid #CCCCCC;
+	}
+	.num{
+		width:30px;
+		height:30px;
+		float:left;
+		border:1px solid #CCCCCC;
+		border-left: none;
+		border-right: none;
+		text-align: center;
 	}
 </style>
