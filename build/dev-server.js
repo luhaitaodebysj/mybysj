@@ -38,15 +38,17 @@ apirouter.get('/user',function(req,res){
 app.post('/user',function(req,res){
    var username;
    var password;
-/*   req.on("data",function(chunk){
-      body+=chunk;
+   var data="";
+   req.on("data",function(chunk){
+      data+=chunk;
    })
    req.on('end',function(){
-       body=querstring.parse(body)
-   })*/
-   LoginDb(username,password);
-   var j={'username':username,'password':password};
-   res.json(j);
+       data = JSON.parse(data);
+       username = data.username;
+       password = data.password;
+       LoginDb(username,password);
+       res.send("true");
+   })
 });
 
 

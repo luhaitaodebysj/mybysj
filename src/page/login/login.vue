@@ -37,13 +37,18 @@ export default {
   methods:{
     login:function(){
       var me=this;
-      this.$http.get('/user',{
-        params:{
-        "username":me.username,
-        "password":me.password
+      this.$http.post('/user',{
+        username:me.username,
+        password:me.password
+      },{
+        'headers':{
+          'Content-Type':'application/json'
         }
       }).then(function(res){
-        console.log(res);
+        if(res){
+          //登录成功后就跳转到主页
+          me.$router.push('/home');
+        }
       }).catch(function(err){
         console.log(err);
       })
