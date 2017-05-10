@@ -5,6 +5,7 @@ import Login from '../page/login/login'
 import Shop from '../page/shop/shop.vue'
 import Personal from '../page/personal/personal.vue'
 import List from '../page/list/list.vue'
+import GoodDetail from '../page/goodDetail/goodDetail.vue'
 
 Vue.use(Router)
 
@@ -39,6 +40,10 @@ export default new Router({
     path: '/list',
     name: 'list',
     component: List
+  },{
+    path:'/goodDetail',
+    name:'goodDetail',
+    component:GoodDetail
   }
   ]
 })
