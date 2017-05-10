@@ -21,6 +21,8 @@ function setHeight(){
 	var headerHeight=$("#header").height();
 	var footHeight=$('.footbar').height();
 	var bodyHeight=totalHeight-headerHeight-footHeight;
+	console.log(headerHeight);
+	console.log(footHeight);
 	$("#body").css('height',bodyHeight);
 }
 

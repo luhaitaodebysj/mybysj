@@ -1,7 +1,7 @@
 <template>
   <div class="login" id="login">
       <div class="login-header">
-         <a href="#"><</a>
+         <a href="home"><</a>
       	 {{title}}
       </div>
      
@@ -37,7 +37,7 @@ export default {
   methods:{
     login:function(){
       var me=this;
-      this.$http.post('/user',{
+      this.$http.post('/api/user',{
         username:me.username,
         password:me.password
       },{

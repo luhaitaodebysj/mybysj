@@ -21,6 +21,30 @@ var autoOpenBrowser = !!config.dev.autoOpenBrowser
 var proxyTable = config.dev.proxyTable
 
 var app = express()
+var LoginDb = require('../server/controller/users.js');
+var apiRouter = express.Router();
+//以下处理接口
+apiRouter.post('/user',function(req,res){
+  var username;
+  var password;
+  var data = "";
+  req.on("data",function(chunk){
+    data+=chunk;
+  })
+  req.on("end",function(){
+      data = JSON.parse(data);
+      console.log("我的");
+      console.log(data);
+      username = data.username;
+      password = data.password;
+      LoginDb(username,password);
+      res.send("true");
+  })
+})
+
+app.use('/api',apiRouter);
+
+
 var compiler = webpack(webpackConfig)
 
 var  LoginDb = require('../server/controller/users.js');
@@ -109,8 +133,7 @@ devMiddleware.waitUntilValid(() => {
   _resolve()
 })
 
-var server = app.listen(port)
-
+var server = app.listen(port);
 module.exports = {
   ready: readyPromise,
   close: () => {
