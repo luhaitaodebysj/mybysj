@@ -27,7 +27,7 @@ var apiRouter = express.Router();
 apiRouter.post('/user',function(req,res){
   var username;
   var password;
-  var data;
+  var data="";
   req.on("data",function(chunk){
     data+=chunk;
   })
