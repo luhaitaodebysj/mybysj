@@ -20,11 +20,15 @@ var autoOpenBrowser = !!config.dev.autoOpenBrowser
 // https://github.com/chimurai/http-proxy-middleware
 var proxyTable = config.dev.proxyTable
 
+
+
+
+
 var app = express()
-var LoginDb = require('../server/controller/users.js');
+var user = require('../server/controller/users.js');
 var apiRouter = express.Router();
 //以下处理接口
-apiRouter.post('/user',function(req,res){
+apiRouter.post('/user/login',function(req,res){
   var username;
   var password;
   var data = "";
@@ -37,12 +41,29 @@ apiRouter.post('/user',function(req,res){
       console.log(data);
       username = data.username;
       password = data.password;
-      LoginDb(username,password);
+      user.login(username,password);
       res.send("true");
   })
 })
-
+apiRouter.post('/user/register',function(req,res){
+  var username;
+  var password;
+  var data = "";
+  req.on("data",function(chunk){
+    data+=chunk;
+  })
+  req.on("end",function(){
+      data = JSON.parse(data);
+      username = data.username;
+      password = data.password;
+      user.register(username,password);
+      res.send("true");
+  })
+})
 app.use('/api',apiRouter);
+
+
+
 
 
 var compiler = webpack(webpackConfig)

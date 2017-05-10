@@ -18,6 +18,7 @@
       		<input type="password" placeholder="密码" name="password" v-model="password">
       	</div>
         <input class="loginBtn" type="button" value="登录" @click="login"/>
+        <input class="loginBtn" type="button" value="注册" @click="register"/>
       </div>
       </div>
   </div>
@@ -37,7 +38,7 @@ export default {
   methods:{
     login:function(){
       var me=this;
-      this.$http.post('/api/user',{
+      this.$http.post('/api/user/login',{
         username:me.username,
         password:me.password
       },{
@@ -49,9 +50,15 @@ export default {
           //登录成功后就跳转到主页
           me.$router.push('/home');
         }
+        else{
+          alert("用户名或密码错误");
+        }
       }).catch(function(err){
         console.log(err);
       })
+    },
+    register:function(){
+
     }
   }
 }
@@ -78,6 +85,7 @@ input{
 	}
 	input{
 		height: 100%;
+    -webkit-appearance: none; -moz-appearance: none; -o-appearance: none; appearance: none;
 	}
 }
 .login-header{
