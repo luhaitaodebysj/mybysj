@@ -1,7 +1,7 @@
 <template>
   <div class="login" id="login">
       <div class="login-header">
-         <a href="#"><</a>
+         <a href="home"><</a>
       	 {{title}}
       </div>
      

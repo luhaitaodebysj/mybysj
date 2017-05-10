@@ -27,12 +27,14 @@ var apiRouter = express.Router();
 apiRouter.post('/user',function(req,res){
   var username;
   var password;
-  var data="";
+  var data = "";
   req.on("data",function(chunk){
     data+=chunk;
   })
   req.on("end",function(){
       data = JSON.parse(data);
+      console.log("我的");
+      console.log(data);
       username = data.username;
       password = data.password;
       LoginDb(username,password);
