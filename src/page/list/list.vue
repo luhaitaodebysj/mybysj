@@ -1,46 +1,80 @@
 <template>
    <div id="list">
-      <div class="list-left">
-         <div class="tab-left tab-active">衣服</div>
-         <div class="tab-left">裤子</div>
-         <div class="tab-left">鞋子</div>
-         <div class="tab-left">帽子</div>
-         <div class="tab-left">手机</div>
-         <div class="tab-left">零食</div>
+      <div class="listLeft">
+         <div class="tabLeft tabActive">衣服</div>
+         <div class="tabLeft">裤子</div>
+         <div class="tabLeft">鞋子</div>
+         <div class="tabLeft">帽子</div>
+         <div class="tabLeft">手机</div>
+         <div class="tabLeft">零食</div>
       </div>
-      <div class="list-right">
-          <div class="content-part" style="display:block;">
-               <div class="commodity-part">
-                   <div class="commodity-pic"></div>
+      <div class="listRight">
+          <div class="listContentPart" style="display:block;">
+           
+               <div class="listCommodityPart" v-for="item in items">
+                   <div class="listCommodityPic"><img :src="item.imgurl" class="listPic"/></div>
+                   <div class="listCommodityTxt">{{item.title}}</div>
+                   <div class="listCommodityPrice">￥{{item.money}}</div>
                </div>
+           
+
           </div>
-          <div class="content-part">2</div>
-          <div class="content-part">3</div>
-          <div class="content-part">4</div>
-          <div class="content-part">5</div>
-          <div class="content-part">6</div>
+          <div class="listContentPart">2</div>
+          <div class="listContentPart">3</div>
+          <div class="listContentPart">4</div>
+          <div class="listContentPart">5</div>
+          <div class="listContentPart">6</div>
       </div>
    </div>
 </template>
 <script type="text/javascript">
 function setWidth(){
-    var listRightWidth = $(document).width() - $(".list-left").width();
+    var listRightWidth = $(document).width() - $(".listLeft").width();
     console.log($(document).width());
-    console.log($(".list-left").width());
+    console.log($(".listLeft").width());
     console.log(listRightWidth);
-	$(".list-right").css("width",listRightWidth);
+	$(".listRight").css("width",listRightWidth);
 }
 
 export default {
   name:'list',
+  data () {
+    return {
+      items:[{
+        imgurl:'../../../static/imags/yifu/y1.jpg',
+        title:'日系男女连帽',
+        money:60.00
+      },{
+        imgurl:'../../../static/imags/yifu/y1.jpg',
+        title:'日系男女连帽',
+        money:60.00
+      },{
+        imgurl:'../../../static/imags/yifu/y1.jpg',
+        title:'日系男女连帽',
+        money:60.00
+      },{
+        imgurl:'../../../static/imags/yifu/y1.jpg',
+        title:'日系男女连帽',
+        money:60.00
+      },{
+        imgurl:'../../../static/imags/yifu/y1.jpg',
+        title:'日系男女连帽',
+        money:60.00
+      },{
+        imgurl:'../../../static/imags/yifu/y1.jpg',
+        title:'日系男女连帽',
+        money:60.00
+      }]
+    }
+  },
   mounted:function() {
   	//当元素渲染出来后
   	setWidth();
 
-    $('.list-left .tab-left').click(function(){
-      $('.list-left .tab-left').removeClass('tab-active');
-      $(this).addClass('tab-active');
-      $(".list-right .content-part").hide().eq($(this).index()).show();
+    $('.listLeft .tabLeft').click(function(){
+      $('.listLeft .tabLeft').removeClass('tabActive');
+      $(this).addClass('tabActive');
+      $(".listRight .listContentPart").hide().eq($(this).index()).show();
     });
   }
 }
@@ -49,32 +83,42 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.list-left{
+.listLeft{
   float:left;
 	width:80px;
 	height:100%;
   font-size:13px;
 }
-.tab-left{
+.tabLeft{
   width:100%;
   height:40px;
   line-height:40px;
   color:#B5B5B5;
 }
-.tab-active{
+.tabActive{
   background:white;
   color:#222222;
 }
-.list-right{
+.listRight{
   float:right;
 	background:white;
 	height:100%;
   overflow:auto;
 }
-.content-part{
+.listContentPart{
   width:100%;
   background:white;
   display:none;
   height:1000px;
+}
+.listCommodityPart{
+  float:left;
+  margin-left:1rem;
+  margin-top:1rem;
+  font-size:0.5rem;
+}
+.listPic{
+  width:5.5rem;
+  height:7rem;
 }
 </style>
