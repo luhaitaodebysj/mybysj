@@ -1,5 +1,10 @@
 <template>
 	<div id="goodDetail">
+		 <header>
+	    <a href="home" class="goodDetailBack"><</a>
+	    商品详情
+	    </header>
+	    <div class="goodDetailBody">
 		<div class="goodDetailBaner">
 			 <swiper loop  :list="imglist"></swiper>	
 		</div>
@@ -12,6 +17,7 @@
 			<img :src="item.img" alt="" v-for="item in imglist">
 		</div>
 		<div class="goodDetailCollect">￥{{price}} | 加入到购物车</div>
+		</div>
 	</div>
 </template>
 
@@ -39,12 +45,27 @@ const baseList = [{
  		}
  	},
  }
-	
 </script>
 
-<style scoped lang="less">
+<style lang="less">
   #goodDetail{
      margin: 0.5rem;
+  }
+  header{
+  	position: fixed;
+  	top:0;
+  	z-index: 99999;
+  	height: 2.5rem;
+  	width: 100%;
+  	line-height: 2.5rem;
+  	background:#ccc;
+  	color: white;
+  }
+  .goodDetailBack{
+  	float: left;
+  }
+  .goodDetailBody{
+  	margin-top: 2.5rem;
   }
  .goodDetailMsg{
  	padding: 0.25rem 0.75rem;

@@ -10,6 +10,8 @@
 		</div>
 
 		<div class="optionList">
+		   <div class="myList"><div class="myListPic myListPic1"></div>&nbsp;&nbsp;账户余额:{{money}}<div class="jiantou"></div></div>
+		   <div class="line"></div>
            <div class="myList"><div class="myListPic myListPic1"></div>&nbsp;&nbsp;全部订单<div class="jiantou"></div></div>
            <div class="line"></div>
            <div class="myList"><div class="myListPic myListPic5"></div>&nbsp;&nbsp;上架商品<div class="jiantou"></div></div>
@@ -23,7 +25,13 @@
 	</div>
 </template>
 <script type="text/javascript">
-	
+export default {
+	data () {
+		return {
+			money:2000
+		}
+	}
+}
 </script>
 <style lang="less" scoped>
 #personal{

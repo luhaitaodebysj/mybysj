@@ -6,6 +6,9 @@
    <div id="body">
     <Baner></Baner>
     <Recommd></Recommd>
+    <div>
+       <a href="list">更多商品</a>
+    </div>
   </div>
 </div>
 </template>

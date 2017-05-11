@@ -2,11 +2,11 @@
   <div class="recommd">
   <div class="recommdOut">
       <div class="recommdBox">
-        <img class="recommdicon" alt="" src="../../static/imags/recommd.png" >
+        <img class="recommdicon" alt="" src="../../static/imags/recommd.png">
         <span>推荐</span>
       </div>
       <div class="recommdFirst">
-        <img src="../assets/imags/iphone_5s-005.jpg" >
+        <a :href="goodDetail"><img src="../assets/imags/iphone_5s-005.jpg" ></a>
         <div class="recFirstDsc">
          <p class="recFirstDsc-title">
            苹果5
@@ -52,7 +52,8 @@ export default {
   data () {
     return {
       msg: 'Welcome to Your Vue.js App',
-      SearchBackground:'search-background'
+      SearchBackground:'search-background',
+      goodDetail:'goodDetail'
     }
   }
 }
