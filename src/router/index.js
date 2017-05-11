@@ -7,6 +7,7 @@ import Personal from '../page/personal/personal.vue'
 import List from '../page/list/list.vue'
 import GoodDetail from '../page/goodDetail/goodDetail.vue'
 import Register from '../page/register/register.vue'
+import Order from '../page/order/order.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -31,8 +32,7 @@ export default new Router({
     path: '/shop',
     name: 'shop',
     component: Shop
-  },
-   {
+  },{
     path: '/personal',
     name: 'personal',
     component: Personal
@@ -48,6 +48,9 @@ export default new Router({
     path: '/register',
     name: 'register',
     component: Register
-  }
-  ]
+  },{
+    path:'/order',
+    name:'order',
+    component:Order
+  }]
 })
