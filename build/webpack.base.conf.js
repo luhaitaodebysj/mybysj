@@ -3,7 +3,7 @@ var utils = require('./utils')
 var config = require('../config')
 var vueLoaderConfig = require('./vue-loader.conf')
 var webpack = require('webpack')
-var vuxLoader=require('vux-loader')
+var vuxLoader = require('vux-loader')
 var webpackConfig={
   entry: {
     app: './src/main.js'

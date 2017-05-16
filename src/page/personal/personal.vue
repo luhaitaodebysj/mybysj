@@ -17,9 +17,9 @@
            	<cell is-link title="全部订单" link="order" value-align="left">
            		<img class="iconstyle" slot="icon" src="../../../static/imags/activity.png" >
            	</cell>
-           	<cell is-link title="上架商品" link="order" value-align="left">
+<!--            	<cell  title="上架商品" link="grounding" v-model="show1" value-align="left">
            		<img class="iconstyle" slot="icon" src="../../../static/imags/commodity.png" >
-           	</cell>
+           	</cell> -->
            	<cell is-link title="待付款" link="order" value-align="left">
            		<img class="iconstyle" slot="icon" src="../../../static/imags/waitpay.png" >
            	</cell>
@@ -33,21 +33,41 @@
            		<img class="iconstyle" slot="icon" src="../../../static/imags/adress.png" >
            	</cell>
            </group>
+           <x-button type="primary" @click.native="showpopup">发布商品</x-button>
 		</div>
+
+		<div v-transfer-dom >
+           <popup v-model="show1" height="100%">
+               <Grounding v-on:close="close"></Grounding>	
+           </popup>
+        </div>
 		<footbar v-bind:index="index"></footbar>
 	</div>
 </template>
 <script type="text/javascript">
 import Footbar from '../../components/Footbar.vue'
-import {Group, Cell} from 'vux'
+import Grounding from '../grounding/grounding.vue'
+import {TransferDom , Group, Cell , Popup , XButton} from 'vux'
 export default {
+	directives: {
+      TransferDom
+    },
 	components:{
-       Group,Cell,Footbar
+       Group,Cell,Footbar,Grounding,XButton,Popup
 	},
 	data () {
 		return {
 			money:2000,
-			index:2
+			index:2,
+			show1:false
+		}
+	},
+	methods:{
+		showpopup:function(){
+			this.show1 = true;
+		},
+		close:function(){
+           this.show1 = false;
 		}
 	}
 }
