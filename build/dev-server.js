@@ -24,9 +24,18 @@ var proxyTable = config.dev.proxyTable
 
 
 
-var app = express()
+var app = express();
 var user = require('../server/controller/users.js');
+var cookieParser =require('cookie-parser');
+var session = require('express-session');
 var apiRouter = express.Router();
+app.use(cookieParser());
+app.use(session({
+   secret:'12345',
+   cookie:{maxAge:60000},
+   resave:false,
+   saveUninitialized:false
+}))
 //以下处理接口
 apiRouter.post('/user/login',function(req,res){
   var username;
@@ -37,10 +46,12 @@ apiRouter.post('/user/login',function(req,res){
   })
   req.on("end",function(){
       data = JSON.parse(data);
-      console.log("我的");
-      console.log(data);
       username = data.username;
       password = data.password;
+      req.session.user={
+        username:username,
+        password:password
+      }
       user.login(username,password);
       res.send("true");
   })

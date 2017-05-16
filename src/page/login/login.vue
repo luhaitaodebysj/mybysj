@@ -1,7 +1,7 @@
 <template>
   <div class="login" id="login">
       <div class="login-header">
-         <a href="home"><</a>
+         <a @click="back"><</a>
       	 {{title}}
       </div>
      
@@ -47,8 +47,8 @@ export default {
         }
       }).then(function(res){
         if(res){
-          //登录成功后就跳转到主页
-          me.$router.push('/home');
+          //登录成功后就跳转到上一个页面;
+          me.$router.back(-1);
         }
         else{
           alert("用户名或密码错误");
@@ -57,8 +57,8 @@ export default {
         console.log(err);
       })
     },
-    register:function(){
-
+    back:function(){
+      this.$router.back(-1);
     }
   }
 }

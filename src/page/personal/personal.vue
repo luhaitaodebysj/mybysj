@@ -4,8 +4,11 @@
 		   <div class="personalTop"></div>
 		   <div class="personalPic"></div>
            <div class="personalTxt">
-              <div class="personalName">你别说了再见</div>
-              <div class="PersonalAccount">账号：abc123456</div>
+              <div class="personalName" v-show="islogin">{{nickname}}</div>
+              <div class="PersonalAccount" v-show='islogin'>账号：{{username}}</div>
+              <div class="notLogin" v-show='!islogin'>
+              	 <a href="login">未登录</a>
+              </div>
            </div>
 		</div>
 
@@ -17,9 +20,6 @@
            	<cell is-link title="全部订单" link="order" value-align="left">
            		<img class="iconstyle" slot="icon" src="../../../static/imags/activity.png" >
            	</cell>
-<!--            	<cell  title="上架商品" link="grounding" v-model="show1" value-align="left">
-           		<img class="iconstyle" slot="icon" src="../../../static/imags/commodity.png" >
-           	</cell> -->
            	<cell is-link title="待付款" link="order" value-align="left">
            		<img class="iconstyle" slot="icon" src="../../../static/imags/waitpay.png" >
            	</cell>
@@ -59,7 +59,10 @@ export default {
 		return {
 			money:2000,
 			index:2,
-			show1:false
+			show1:false,
+			islogin:false,
+			nickname:'xxx',
+			username:'1111'
 		}
 	},
 	methods:{
@@ -69,6 +72,12 @@ export default {
 		close:function(){
            this.show1 = false;
 		}
+	},
+	created:function(){
+		console.log("created");
+	},
+	mounted:function(){
+		console.log("mouted");
 	}
 }
 </script>
