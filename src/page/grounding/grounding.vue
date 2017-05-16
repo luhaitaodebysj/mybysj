@@ -1,7 +1,7 @@
 <template>
   <div id="grounding">
    <div class="header">
-     <a class="close" @click="showPopup">关闭</a>
+     <a class="close" @click="closePopup">关闭</a>
      <p class="put">发布</p>
    </div>
    <div class="body">
@@ -28,17 +28,21 @@
    <div class="confirm" @click="confirm">
        确定发布
    </div>
+   <toast v-model="showPositionValue" type="text" :time="800" is-show-mask text="内容不能为空" ></toast>
   </div>
 </template>
 
 <script>
+import {Toast} from 'vux'
 export default {
+  components:{Toast},
   name: 'app',
   data () {
     return {
       title:"",
       discribe:'',
-      src:''
+      src:'',
+      showPositionValue:false
     }
   },
   methods:{
@@ -56,13 +60,21 @@ export default {
         discribe:me.discribe,
         src:me.src
       }
-      this.$http.post('/api/upimg',data).then(function(){
+      if(this.title =="" || this.discribe =="" || this.src ==""){
+           this.showPositionValue = true;
+      } else {
+        this.$http.post('/api/upimg',data).then(function(){
 
-      }).catch(function(){
+        }).catch(function(){
 
-      })
+        })
+      }
     },
-    showPopup:function(){
+    closePopup:function(){
+      //关闭时清空信息
+      this.title = '';
+      this.discribe = '';
+      this.src = '';
       this.$emit("close");
     }
   }
