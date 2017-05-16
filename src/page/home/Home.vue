@@ -10,6 +10,7 @@
        <a href="list">更多商品</a>
     </div>
   </div>
+   <footbar v-bind:index="index"></footbar> 
 </div>
 </template>
 
@@ -23,6 +24,7 @@ export default {
   data () {
     return {
       selected:"主页",
+      index:0
     }
   },
   components:{Search,Baner,Footbar,Recommd}
@@ -32,7 +34,8 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
 #body{
-  overflow: auto;
+  overflow-y: auto;
+  margin-bottom: 53px;
 }
 #footer{
   border-top:1px solid #cdcdcd;

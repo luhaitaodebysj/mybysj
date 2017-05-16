@@ -25,9 +25,11 @@
           <div class="listContentPart">5</div>
           <div class="listContentPart">6</div>
       </div>
+      <footbar></footbar>
    </div>
 </template>
 <script type="text/javascript">
+import Footbar from '../../components/Footbar.vue'
 function setWidth(){
     var listRightWidth = $(document).width() - $(".listLeft").width();
     console.log($(document).width());
@@ -38,6 +40,7 @@ function setWidth(){
 
 export default {
   name:'list',
+  components:{Footbar},
   data () {
     return {
       items:[{

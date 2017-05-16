@@ -29,22 +29,25 @@
            	<cell is-link title="待发货" link="order" value-align="left">
            		<img class="iconstyle" slot="icon" src="../../../static/imags/daiFahuo.png" >
            	</cell>
-           	<cell is-link title="收货地址" link="order" value-align="left">
+           	<cell is-link title="收货地址" link="address" value-align="left">
            		<img class="iconstyle" slot="icon" src="../../../static/imags/adress.png" >
            	</cell>
            </group>
 		</div>
+		<footbar v-bind:index="index"></footbar>
 	</div>
 </template>
 <script type="text/javascript">
+import Footbar from '../../components/Footbar.vue'
 import {Group, Cell} from 'vux'
 export default {
 	components:{
-       Group,Cell
+       Group,Cell,Footbar
 	},
 	data () {
 		return {
-			money:2000
+			money:2000,
+			index:2
 		}
 	}
 }

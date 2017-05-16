@@ -8,11 +8,15 @@ import List from '../page/list/list.vue'
 import GoodDetail from '../page/goodDetail/goodDetail.vue'
 import Register from '../page/register/register.vue'
 import Order from '../page/order/order.vue'
+import Address from '../page/address/address.vue'
 Vue.use(Router)
 
 export default new Router({
   mode:'history',
-  routes: [
+  routes: [{
+    path:'*',
+    redirect:'/'
+  },
   {
   	path: '/',
   	name: 'Home',
@@ -35,22 +39,27 @@ export default new Router({
   },{
     path: '/personal',
     name: 'personal',
-    component: Personal
+    component: Personal,
   },{
     path: '/list',
     name: 'list',
     component: List
   },{
+    path:'/order',
+    name:'order',
+    component:Order
+  },{
     path:'/goodDetail',
     name:'goodDetail',
-    component:GoodDetail
+    component:GoodDetail,
+    meta: { navShow: false, cname: '子页面' }
   },{
     path: '/register',
     name: 'register',
     component: Register
   },{
-    path:'/order',
-    name:'order',
-    component:Order
+    path:'/address',
+    name:'address',
+    component:Address
   }]
 })

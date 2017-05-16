@@ -35,9 +35,11 @@
 	    		进入结算
 	    	</div>
 	    </div>
+	    <footbar v-bind:index="index"></footbar>
 	</div>
 </template>
 <script type="text/javascript">
+import Footbar from '../../components/Footbar.vue'
 //初始化页面高度
 function setHeight() {
 	var height=$(window).height()-153;
@@ -45,12 +47,14 @@ function setHeight() {
 }
 export default {
   name:'shop',
+  components:{Footbar},
   data () {
     return {
       selected:"主页",
       totalMoney:0,
       goodsNum:0,
       title:'数量',
+      index:1,
       items:[{
       	imgurl:'../../../static/imags/book/java.jpg',
       	title:'自行车',
