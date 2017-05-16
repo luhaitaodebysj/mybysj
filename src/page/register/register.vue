@@ -12,13 +12,17 @@
       		<label>用户名</label>
       		<input type="text" placeholder="请输入账号" name="username" v-model="username">
       	</div>
+        <div class="nickname">
+          <label>昵称</label>
+          <input type="text" placeholder="请输入昵称" name="nickmame" v-model="nickname">
+        </div>
       	<div class="password">
       		<label>密码</label>
       		<input type="password" placeholder="密码" name="password" v-model="password">
       	</div>
         <div class="password">
-          <label>请再次输入密码</label>
-          <input type="password" placeholder="密码" name="password" v-model="passwordAgin">
+          <label>密码</label>
+          <input type="password" placeholder="重复密码" name="password" v-model="passwordAgin">
         </div>
         <input class="loginBtn" type="button" value="确定" @click="register"/>
       </div>
@@ -35,15 +39,20 @@ export default {
       title:'注册',
       username:'',
       password:'',
+      nickname:'',
       passwordAgin:''
     }
   },
   methods:{
     register:function(){
       var me=this;
-      this.$http.post('/api/user/register',{
+      if(this.password!=this.passwordAgin){
+        alert("两次密码不一致");
+      } else {
+              this.$http.post('/api/user/register',{
         username:me.username,
-        password:me.password
+        password:me.password,
+        nickname:me.nickname
       },{
         'headers':{
           'Content-Type':'application/json'
@@ -60,6 +69,7 @@ export default {
       }).catch(function(err){
         console.log(err);
       })
+      }
     }
   }
 }
@@ -68,7 +78,6 @@ export default {
 <style  scoped lang="less">
 input:focus { outline: none; }
 input{
-  width:14rem;
   height:2rem;
   border:none;
   background:none;
@@ -82,10 +91,16 @@ input{
 }
 #login-post{
 	>div{
-		height: 2rem;
+		height: 3rem;
+    display: flex;
+    line-height: 3rem;
 	}
+  label{
+    flex:2; 
+
+  }
 	input{
-    display: inline-block;
+    flex:3;
 		height: 100%;
     -webkit-appearance: none; -moz-appearance: none; -o-appearance: none; appearance: none;
 	}
@@ -108,32 +123,32 @@ input{
 	}
 }
 
-.username{
- width:15rem;
- height:2rem;
- border-radius:5px;
- margin:0 auto;
- background:#DADADA;
- border:1px solid #B2B2B2;
- margin-top:4rem;
- filter:alpha(opacity=70);  
- -moz-opacity:0.7;  
- -khtml-opacity: 0.7;  
-  opacity: 0.7;
-}
-.password{
- width:15rem;
- height:2rem;
- border-radius:5px;
- margin:0 auto;
- background:#DADADA;
- border:1px solid #B2B2B2;
- margin-top:2rem;
- filter:alpha(opacity=70);  
- -moz-opacity:0.7;  
- -khtml-opacity: 0.7;  
-  opacity: 0.7;
-}
+// .username{
+//  width:15rem;
+//  height:2rem;
+//  border-radius:5px;
+//  margin:0 auto;
+//  background:#DADADA;
+//  border:1px solid #B2B2B2;
+//  margin-top:4rem;
+//  filter:alpha(opacity=70);  
+//  -moz-opacity:0.7;  
+//  -khtml-opacity: 0.7;  
+//   opacity: 0.7;
+// }
+// .password{
+//  width:15rem;
+//  height:2rem;
+//  border-radius:5px;
+//  margin:0 auto;
+//  background:#DADADA;
+//  border:1px solid #B2B2B2;
+//  margin-top:2rem;
+//  filter:alpha(opacity=70);  
+//  -moz-opacity:0.7;  
+//  -khtml-opacity: 0.7;  
+//   opacity: 0.7;
+// }
 .logo{
   background:url(../../../static/imags/logo.png) no-repeat;
   width:195px;

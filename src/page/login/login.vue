@@ -59,6 +59,9 @@ export default {
     },
     back:function(){
       this.$router.back(-1);
+    },
+    register:function(){
+      this.$router.push('register');
     }
   }
 }
