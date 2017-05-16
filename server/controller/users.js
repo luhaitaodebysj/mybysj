@@ -1,10 +1,13 @@
 var db=require('../db/dbMysql.js');
 //处理登录
 var login = function(username,password){
-	var sql = 'SELECT * from user_info';
+	var sql = 'SELECT * from user_info where userName =\''+username+'\' and password = \''+password+'\'';
 	db.query(sql, function (error, results, fields) {
 		if (error) throw error;
 		console.log('The solution is: ', results);
+		if (results !== null){
+			return {'flag':'success'};
+		}
 	});
 }
 //处理注册
