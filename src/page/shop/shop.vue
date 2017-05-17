@@ -32,7 +32,7 @@
 	    		<p>总计￥<i>116.0</i>元</p>
 	    	</div>
 	    	<div class="shopSurePayRight">
-	    		进入结算
+	    		提交订单
 	    	</div>
 	    </div>
 	    <footbar v-bind:index="index"></footbar>

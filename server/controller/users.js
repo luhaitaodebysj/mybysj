@@ -1,30 +1,44 @@
 var db=require('../db/dbMysql.js');
 //处理登录
-var login = function(username,password){
+var login = function (username,password,callback) {
 	var sql = 'SELECT * from user_info where userName =\''+username+'\' and password = \''+password+'\'';
 	db.query(sql, function (error, results, fields) {
 		if (error) throw error;
-		console.log('The solution is: ', results);
-		if (results !== null){
-			return {'flag':'success'};
+		if (results == null || results.length<=0){
+			console.log("密码错误");
+			callback(false);
+		} else {
+			callback(true);
 		}
 	});
 }
 //处理注册
-var register = function(username,password){
-   db.open(function(err,db){
-	if(err){return console.error(err);}
-	db.collection("user_info",function(err,collection){
-		var data={'username':username,'password':password};
-		collection.insert(data,{safe:true},function(err,result){
-			console.log(result);
-		})
-		db.close();
-	})
-})
+var register = function (username,password,nickname,callback) {
+	var sql = 'SELECT * from user_info where userName = \''+username+'\'';
+    db.query(sql, function (error,results,fields) {
+     if(error) throw error;
+     if(results == null || results.length<=0){
+     	db.query('INSERT INTO user_info (username,password,nickname,balance) VALUES (?,?,?,?)',[username,password,nickname,2000],function (error,results,fields) {
+     		if(error) throw error;
+     		callback(true);
+     	})
+     } else {
+         callback(false);  
+     }
+   })
+}
+
+//用户个人信息
+
+var usreInfo = function (username,callback) {
+ var sql = 'SELECT * from user_info where userName = \''+username+'\'';
+ db.query(sql,function (error,results,fields) {
+    callback(results);
+ })
 }
 
 module.exports = {
 	login:login,
-	register:register
+	register:register,
+	usreInfo:usreInfo
 }

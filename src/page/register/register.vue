@@ -27,11 +27,14 @@
         <input class="loginBtn" type="button" value="确定" @click="register"/>
       </div>
       </div>
+      <toast v-model="showPositionValue" type="text" :time="800" is-show-mask v-bind:text="msg"></toast>
   </div>
 </template>
 
 <script type="text/javascript">
+import {Toast} from 'vux'
 export default {
+  components:{ Toast },
   name: 'login',
   data () {
     return {
@@ -40,14 +43,17 @@ export default {
       username:'',
       password:'',
       nickname:'',
-      passwordAgin:''
+      passwordAgin:'',
+      showPositionValue:false,
+      msg:'内容不能为空'
     }
   },
   methods:{
     register:function(){
       var me=this;
       if(this.password!=this.passwordAgin){
-        alert("两次密码不一致");
+        this.showPositionValue = true;
+        this.msg = '两次密码不一致';
       } else {
               this.$http.post('/api/user/register',{
         username:me.username,
@@ -58,13 +64,13 @@ export default {
           'Content-Type':'application/json'
         }
       }).then(function(res){
-        if(res){
-          //注册成功后就跳转到主页
-          alert("注册成功");
-          me.$router.push('/home');
+        if(res.data){
+          //注册成功后就跳转到登录页面
+         me.$router.push('/login');
         }
         else{
-          alert("用户名已经使用");
+        me.msg = '用户名已使用';
+        me.showPositionValue = true;
         }
       }).catch(function(err){
         console.log(err);

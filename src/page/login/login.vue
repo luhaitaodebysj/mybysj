@@ -21,18 +21,23 @@
         <input class="loginBtn" type="button" value="注册" @click="register"/>
       </div>
       </div>
+      <toast v-model="showToast" type="text" :time="800" is-show-mask v-bind:text="msg"></toast>
   </div>
 </template>
 
 <script type="text/javascript">
+import {Toast} from 'vux'
 export default {
+  components:{Toast},
   name: 'login',
   data () {
     return {
       msg: 'Welcome to Your Vue.js App',
       title:'登录',
       username:'',
-      password:''
+      password:'',
+      showToast:false,
+      msg:'用户名或密码错误'
     }
   },
   methods:{
@@ -46,12 +51,12 @@ export default {
           'Content-Type':'application/json'
         }
       }).then(function(res){
-        if(res){
+        if(res.data){
           //登录成功后就跳转到上一个页面;
-          me.$router.back(-1);
+          me.$router.push('home');
         }
         else{
-          alert("用户名或密码错误");
+          me.showToast = true;
         }
       }).catch(function(err){
         console.log(err);

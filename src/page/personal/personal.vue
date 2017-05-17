@@ -57,7 +57,7 @@ export default {
 	},
 	data () {
 		return {
-			money:2000,
+			money:0,
 			index:2,
 			show1:false,
 			islogin:false,
@@ -74,10 +74,25 @@ export default {
 		}
 	},
 	created:function(){
-		console.log("created");
+     console.log("created");
 	},
 	mounted:function(){
-		console.log("mouted");
+		console.log("mounted");
+		var self = this;
+		this.$http.get('/api/user/info').then(function (results) {
+			var r = results.data;
+			if(r.length > 0){
+				self.islogin = true;
+				self.nickname = r[0].nickName;
+				self.username = r[0].userName;
+				self.money = r[0].balance;
+			}
+		}).catch(function (error) {
+			console.log(error);
+		})
+	},
+	destroyed:function(){
+		console.log("destroyed");
 	}
 }
 </script>

@@ -21,9 +21,6 @@ var autoOpenBrowser = !!config.dev.autoOpenBrowser
 var proxyTable = config.dev.proxyTable
 
 
-
-
-
 var app = express();
 var user = require('../server/controller/users.js');
 var cookieParser =require('cookie-parser');
@@ -32,12 +29,12 @@ var apiRouter = express.Router();
 app.use(cookieParser());
 app.use(session({
    secret:'12345',
-   cookie:{maxAge:60000},
+   cookie:{maxAge:1000*60*60},
    resave:false,
    saveUninitialized:false
 }))
 //以下处理接口
-apiRouter.post('/user/login',function(req,res){
+apiRouter.post('/user/login',function (req,res){
   var username;
   var password;
   var data = "";
@@ -52,13 +49,15 @@ apiRouter.post('/user/login',function(req,res){
         username:username,
         password:password
       }
-      user.login(username,password);
-      res.send("true");
+      user.login(username,password,function (results) {
+        res.send(results);
+      });
   })
 })
-apiRouter.post('/user/register',function(req,res){
+apiRouter.post('/user/register',function (req,res){
   var username;
   var password;
+  var nickname;
   var data = "";
   req.on("data",function(chunk){
     data+=chunk;
@@ -67,9 +66,27 @@ apiRouter.post('/user/register',function(req,res){
       data = JSON.parse(data);
       username = data.username;
       password = data.password;
-      user.register(username,password);
-      res.send("true");
+      nickname = data.nickname;
+      user.register(username,password,nickname,function (results) {
+        res.send(results);
+      });
   })
+})
+//获取用户信息
+apiRouter.get('/user/info',function (req,res) {
+  if (req.session.user){
+    var username = req.session.user.username;
+     user.usreInfo(username,function (results) {
+      res.send(results);
+     })
+  } else {
+    res.send(0);
+  }
+})
+
+//上架商品接口
+apiRouter.get('goods/put',function (req,res) {
+  
 })
 app.use('/api',apiRouter);
 
@@ -78,36 +95,6 @@ app.use('/api',apiRouter);
 
 
 var compiler = webpack(webpackConfig)
-
-var  LoginDb = require('../server/controller/users.js');
-var apirouter = express.Router() ;
-console.log(apirouter);
-apirouter.get('/user',function(req,res){
-   var username = req.query.username;
-   var password = req.query.password;
-   LoginDb(username,password);
-   console.log('接收了请求');
-   var j={'username':username,'password':password};
-   res.json(j);
-})
-
-app.post('/user',function(req,res){
-   var username;
-   var password;
-   var data="";
-   req.on("data",function(chunk){
-      data+=chunk;
-   })
-   req.on('end',function(){
-       data = JSON.parse(data);
-       username = data.username;
-       password = data.password;
-       LoginDb(username,password);
-       res.send("true");
-   })
-});
-
-
 
 var devMiddleware = require('webpack-dev-middleware')(compiler, {
   publicPath: webpackConfig.output.publicPath,
