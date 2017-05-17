@@ -89,7 +89,12 @@ export default {
     }
   },methods:{
      reduce:function(){
+     if(this.goodsNum>0){
      	this.goodsNum--;
+     } else {
+        this.goodsNum=0;
+        alert('最小数字为0');
+     }
      },
      add:function(){
         this.goodsNum++;
@@ -122,7 +127,6 @@ ul,li{
 	}
 	.shopTitle{
 		width: 100%;
-		height: 2.5rem;
 		text-align: left;
 		padding: 0.75rem;
 		color: #333;
@@ -137,7 +141,6 @@ ul,li{
 		height: 7.5rem;
 		border-radius: 4px;
 		border:1px solid  #ddd;
-		padding: 0.75rem;
 
 	}
 	.shoppingImg{
@@ -203,7 +206,8 @@ ul,li{
 		background-color: black;
 		color:white;
 		border-radius: 4px;
-		line-height: 30px;
+		line-height: 40px;
+		margin-right:1rem;
 	}
 	.reduce,.add{
 		width:30px;

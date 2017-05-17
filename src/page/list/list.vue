@@ -10,16 +10,19 @@
       </div>
       <div class="listRight">
           <div class="listContentPart" style="display:block;">
-           
                <div class="listCommodityPart" v-for="item in items">
                    <div class="listCommodityPic"><img :src="item.imgurl" class="listPic"/></div>
                    <div class="listCommodityTxt">{{item.title}}</div>
                    <div class="listCommodityPrice">￥{{item.money}}</div>
                </div>
-           
-
           </div>
-          <div class="listContentPart">2</div>
+          <div class="listContentPart">
+               <div class="listCommodityPart" v-for="item in items2">
+                   <div class="listCommodityPic"><img :src="item.imgurl" class="listPic"/></div>
+                   <div class="listCommodityTxt">{{item.title}}</div>
+                   <div class="listCommodityPrice">￥{{item.money}}</div>
+               </div>
+          </div>
           <div class="listContentPart">3</div>
           <div class="listContentPart">4</div>
           <div class="listContentPart">5</div>
@@ -67,6 +70,31 @@ export default {
         imgurl:'../../../static/imags/yifu/y1.jpg',
         title:'日系男女连帽',
         money:60.00
+      }],
+      items2:[{
+        imgurl:'../../../static/imags/yifu/y2.jpg',
+        title:'日系男女连帽',
+        money:60.00
+      },{
+        imgurl:'../../../static/imags/yifu/y2.jpg',
+        title:'日系男女连帽',
+        money:60.00
+      },{
+        imgurl:'../../../static/imags/yifu/y2.jpg',
+        title:'日系男女连帽',
+        money:60.00
+      },{
+        imgurl:'../../../static/imags/yifu/y2.jpg',
+        title:'日系男女连帽',
+        money:60.00
+      },{
+        imgurl:'../../../static/imags/yifu/y2.jpg',
+        title:'日系男女连帽',
+        money:60.00
+      },{
+        imgurl:'../../../static/imags/yifu/y2.jpg',
+        title:'日系男女连帽',
+        money:60.00
       }]
     }
   },
@@ -112,7 +140,6 @@ export default {
   width:100%;
   background:white;
   display:none;
-  height:1000px;
 }
 .listCommodityPart{
   float:left;
