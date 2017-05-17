@@ -10,6 +10,7 @@ import Register from '../page/register/register.vue'
 import Order from '../page/order/order.vue'
 import Address from '../page/address/address.vue'
 import Grounding from '../page/grounding/grounding.vue'
+import Detail from '../page/detail/detail.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -65,5 +66,9 @@ export default new Router({
     path:'/grounding',
     name:'grounding',
     component:Grounding
+  },{
+    path:'/detail',
+    name:'detail',
+    component:Detail
   }]
 })
