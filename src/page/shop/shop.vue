@@ -2,7 +2,7 @@
 	<div id="shop">
 	    <div class="shopTitle">购物车</div>
 	    <div id="shopList">
-	    	<div class="shopList" v-for="item in items">
+	    	<div class="shopList" v-for="(item,index) in items">
 	    		<div class="shopListBox">
 	    			<div class="shoppingImg">
 	    				<img :src="item.imgurl">
@@ -16,9 +16,9 @@
 	    						<span>￥{{item.money}}</span>
 	    					</li>
 	    					<li>
-	    						<div class="reduce" v-on:click="reduce">-</div>
-	    						<input type="text" class="num" v-model="goodsNum">
-	    						<div class="add" v-on:click="add">+</div>
+	    						<div class="reduce" v-on:click="reduce(index)">-</div>
+	    						<input type="text" class="num" v-model="item.pnum">
+	    						<div class="add" v-on:click="add(index)">+</div>
 	    					</li>
 	    				</ul>
 	    			</div>		
@@ -59,45 +59,51 @@ export default {
       	imgurl:'../../../static/imags/book/java.jpg',
       	title:'自行车',
       	num:7,
-      	money:555.00
+      	money:555.00,
+      	pnum:0
       },{
       	imgurl:'../../../static/imags/book/java.jpg',
       	title:'自行车',
       	num:7,
-      	money:555.00
+      	money:555.00,
+      	pnum:0
       },{
       	imgurl:'../../../static/imags/book/java.jpg',
       	title:'自行车',
       	num:7,
-      	money:555.00
+      	money:555.00,
+      	pnum:0
       },{
       	imgurl:'../../../static/imags/book/java.jpg',
       	title:'自行车',
       	num:7,
-      	money:555.00
+      	money:555.00,
+      	pnum:0
       },{
       	imgurl:'../../../static/imags/book/java.jpg',
       	title:'自行车',
       	num:7,
-      	money:555.00
+      	money:555.00,
+      	pnum:0
       },{
       	imgurl:'../../../static/imags/book/java.jpg',
       	title:'自行车',
       	num:7,
-      	money:555.00
+      	money:555.00,
+      	pnum:0
       }]
     }
   },methods:{
-     reduce:function(){
-     if(this.goodsNum>0){
-     	this.goodsNum--;
+     reduce:function(index){
+     if(this.items[index].pnum>0){
+     	this.items[index].pnum--;
      } else {
-        this.goodsNum=0;
+        this.items[index].pnum=0;
         alert('最小数字为0');
      }
      },
-     add:function(){
-        this.goodsNum++;
+     add:function(index){
+     this.items[index].pnum++;
      }
   },
   created:function() {

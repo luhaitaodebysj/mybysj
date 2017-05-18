@@ -18,7 +18,7 @@
 					买了什么什么零食
 				</li>
 				<li class="orderDetail">
-					<a class="check">查看订单详情</a>
+					<a class="check" href="detail">查看订单详情</a>
 				</li>
 			</ul>
 		</div>
