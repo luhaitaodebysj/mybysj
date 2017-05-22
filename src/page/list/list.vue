@@ -10,9 +10,11 @@
       <div class="listRight">
           <div class="listContentPart" style="display:block;">
                <div class="listCommodityPart" v-for="item in goodsList">
+                  <a :href='"goodDetail?goodsid="+ item.goodsId'>
                    <div class="listCommodityPic"><img :src="baseURI+item.imgUrl" class="listPic"/></div>
                    <div class="listCommodityTxt">{{item.goodsName | formatTitle }}</div>
                    <div class="listCommodityPrice">￥{{item.price}}</div>
+                   </a>
                </div>
           </div>
       </div>

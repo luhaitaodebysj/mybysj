@@ -7,13 +7,13 @@
 
       <div class="detailTop">
          <div class="detailStatus">
-           {{status}}
+           {{status2}}
          </div>
          <div class="detailStatusPic1">
-           <img src="../../../static/imags/shipped.png"  v-if="status=='0'"/>
            <img src="../../../static/imags/shipped.png"  v-if="status=='1'"/>
-           <img src="../../../static/imags/notshipped.png"  v-if="status=='2'" />
-           <img src="../../../static/imags/success.png"  v-if="status=='3'"/>
+           <img src="../../../static/imags/shipped.png"  v-if="status=='2'"/>
+           <img src="../../../static/imags/notshipped.png"  v-if="status=='3'" />
+           <img src="../../../static/imags/success.png"  v-if="status=='4'"/>
          </div>
       </div>
 
@@ -48,11 +48,11 @@
          </div>
       </div>
       <div class="detailBtnPart">
-        <input type="button" :value="status2" class="detailBtn" @click="showPlugin"/>
+        <input type="button" :value="status2" class="detailBtnLeft" @click="showPlugin" v-if="items.goodsStatus =='1' || items.goodsStatus=='3'"/>
+        <input type="button" :value="status2" class="detailBtn"/>
       </div>
 
       <div class="detailOrder">
-       <!--  <div class="detailOrderPic"><img src="../../../static/imags/xiadan.png" /></div> -->
         <div class="detailOrderTime">订单号：{{items.orderNum}}</div>
         <div class="detailOrderTime">订单时间：{{items.orderTime}}</div>
         <div class="detailOrderTime">总价：{{items.orderTotalPrice}} RMB</div>
@@ -62,7 +62,7 @@
         <confirm v-model="show"
         :title="title"
         @on-cancel="onCancel"
-        @on-confirm="onConfirm"
+        @on-confirm="onConfirm()"
         @on-show="onShow"
         @on-hide="onHide">
         <p style="text-align:center;">{{msgBox}}</p>
@@ -94,23 +94,23 @@ export default {
   },
   computed:{
     status:function(){
-      var s = this.items.orderStatus;
+      var s = this.items.goodsStatus;
       var text = "";
-      if (s == "0"){
+      if (s == "1"){
          text = "待付款";
          this.status2 = '付款';
       } 
-      if (s == '1'){
+      if (s == '2'){
         text = '待发货';
         this.status2 = '卖家未发货';
       }
-      if (s == '2'){
+      if (s == '3'){
         text == '待收货';
         this.status2 = '收货';
       }
-      if (s == '3'){
+      if (s == '4'){
         text == '交易成功';
-        this.status2 = '';
+        this.status2 = '交易成功';
       }
       return text;
     }
@@ -124,11 +124,31 @@ export default {
     },
     onConfirm () {
       var self = this;
-      this.$http.post('api/order/pay',{
-        totalMoney: self.items.orderTotalPrice
-      }).then(function (results){
-
-      })
+      var s = this.items.goodsStatus;
+      if( s == "1"){
+        this.$http.post('api/order/pay',{
+          totalMoney: self.items.orderTotalPrice,
+          goodsId:self.items.goodsId,
+          orderId:self.items.orderId
+        }).then(function (results){
+          if(results.data == "noMoney"){
+            alert('没钱去充值');
+          } else {
+            self.$router.push('order');
+          }
+        })
+      } else if(s == '3'){
+        this.$http.get('api/order/take',{
+          params:{
+             goodsId:self.items.goodsId,
+          }
+        }).then(function (results){
+           if(results.data){
+              self.status2 = '交易成功';
+              $('.detailBtnLeft').hide();
+           }
+        })
+      }
     },
     onHide () {
       console.log('on hide')
@@ -276,6 +296,9 @@ export default {
   border-radius:10px;
   margin-top:0.2rem;
   float:right;
+}
+.detailBtnLeft{
+  float: left;
 }
 .detailOrder{
   width:100%;

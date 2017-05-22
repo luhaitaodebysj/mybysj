@@ -1,7 +1,7 @@
 <template>
 	<div id="goodDetail">
 		 <header>
-	    <a href="home" class="goodDetailBack"><</a>
+	    <a @click="back" class="goodDetailBack"><</a>
 	    商品详情
 	    </header>
 	    <div class="goodDetailBody">
@@ -51,6 +51,9 @@ var params;
          self.$router.push('login');
         }
       })
+    },
+    back:function(){
+      this.$router.go(-1);
     }
   },
   mounted:function(){

@@ -60,7 +60,11 @@ export default {
       name:"",
       tel:"",
       detailAddress:'',
-      user:{},
+      user:{
+        user:'',
+        telPhone:'',
+        address:''
+      },
       showScrollBox:false,
     }
   },
@@ -82,7 +86,7 @@ export default {
     this.$http.get('api/user/getaddress').then(function (results){
        if(results.data == "tologin"){
           self.$router.push('login');
-       } else {
+       } else if(results.data.length > 0){
          self.user = results.data[0];
        }
     })

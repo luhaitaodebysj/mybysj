@@ -26,7 +26,7 @@
 	    </div>
 	    </div>
 
-	    <div class="shopSurePay">
+	    <div class="shopSurePay" v-if="items.length>0">
 	    	<div class="shopSurePayLeft">
 	    		<p>共<i>{{ totalNum}}</i>件商品</p>
 	    		<p>总计￥<i>{{totalMoney}}</i>元</p>

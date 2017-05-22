@@ -21,14 +21,14 @@
       <div class="recommdOther">
         <div class="recommdOtherOne">
           <div class="recommdOtherOne-1">
-            <a href="javascript:void(0)">
+            <a :href="baseDetailUrl+data[0].goodsId">
               <img :src="baseURI+data[0].imgUrl">
             </a>
             <span>{{data[0].goodsType}}</span>
             <span class="recommdOtherPrice">￥{{data[0].price}}</span>
          </div>
          <div class="recommdOtherOne-2">
-           <a href="javascript:void(0)">
+           <a :href="baseDetailUrl+data[1].goodsId">
              <img :src="baseURI+data[1].imgUrl">
            </a>
            <span>{{data[1].goodsType}}</span>
@@ -37,14 +37,14 @@
        </div>
        <div class="recommdOtherTwo">
         <div class="recommdOtherTwo-1">
-         <a href="javascript:void(0)">
+         <a :href="baseDetailUrl+data[2].goodsId">
            <img :src="baseURI+data[2].imgUrl">
          </a>
          <span>{{data[2].goodsType}}</span>
          <span class="recommdOtherPrice">￥{{data[2].price}}</span>
        </div>
        <div class="recommdOtherTwo-2">
-         <a href="javascript:void(0)">
+         <a :href="baseDetailUrl+data[3].goodsId">
            <img :src="baseURI+data[3].imgUrl">
          </a>
          <span>{{data[3].goodsType}}</span>

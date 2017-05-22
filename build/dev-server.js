@@ -243,11 +243,10 @@ apiRouter.post('/order/pay',function (req,res){
       })
       req.on("end",function(){
         data = JSON.parse(data);
-        console.log(data);
-        var name = data.name;
-        var tel = data.tel;
-        var address = data.address;
-        user.setAddress(userId,name,tel,address,function (results){
+        var totalMoney = data.totalMoney;
+        var goodsId = data.goodsId;
+        var orderId = data.orderId;
+        order.pay(userId,totalMoney,goodsId,orderId,function (results){
           res.send(results);
         })
       })
@@ -256,6 +255,29 @@ apiRouter.post('/order/pay',function (req,res){
     }
 })
 
+//订单发货
+apiRouter.get('/order/delivery',function (req,res){
+   if(req.session.user){
+      var goodsId = req.query.goodsId;
+      order.delivery(goodsId,function (){
+        res.send(true);
+      })
+   } else{
+     res.send(false);
+   }
+})
+
+//买家收货
+apiRouter.get('/order/take',function (req,res){
+     if(req.session.user){
+      var goodsId = req.query.goodsId;
+      order.takeGoods(goodsId,function (){
+        res.send(true);
+      })
+    } else{
+     res.send(false);
+    }
+})
 
 //存取收获地址
 apiRouter.post('/user/address',function (req,res){

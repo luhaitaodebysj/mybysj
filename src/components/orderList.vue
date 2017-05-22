@@ -37,9 +37,12 @@ export default {
 		status:function(){
            var s = this.data.goodsStatus;
            var text = "";
-           if(s == "0"){
+           if(s == "1"){
              text = "待付款"
            }
+           if(s == '2') text ="待发货";
+           if(s == '3') text ="待收货";
+           if(s == '4') text ="交易成功";
 			return  text;
 		}
 	}
