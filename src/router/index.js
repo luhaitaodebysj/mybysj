@@ -11,6 +11,7 @@ import Order from '../page/order/order.vue'
 import Address from '../page/address/address.vue'
 import Grounding from '../page/grounding/grounding.vue'
 import Detail from '../page/detail/detail.vue'
+import PutGoodsList from '../page/putGoodsList/putGoodsList.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -70,5 +71,9 @@ export default new Router({
     path:'/detail',
     name:'detail',
     component:Detail
+  },{
+    path:'/putGoodsList',
+    name:'putGoodsList',
+    component:PutGoodsList
   }]
 })

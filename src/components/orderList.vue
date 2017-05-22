@@ -6,19 +6,19 @@
 					<div class="orderHeaderImg"></div>
 					<div class="orderHeaderMsg">
 						<div>
-							<div class="orderName">乐福汉堡></div>
-							<div class="orderStaus">待付款</div>
+							<div class="orderName">{{data.goodsType}}></div>
+							<div class="orderStaus">{{status}}</div>
 						</div>
 						<div class="orderTime">
-							2017-05-01 12.13
+							{{data.orderTime}}
 						</div>
 					</div>
 				</li>
 				<li class="orderDescribe">
-					买了什么什么零食
+					{{data.goodsName}}
 				</li>
 				<li class="orderDetail">
-					<a class="check">查看订单详情</a>
+					<a class="check" href="detail" >查看订单详情</a>
 				</li>
 			</ul>
 		</div>
@@ -27,9 +27,20 @@
 
 <script type="text/javascript">
 export default {
+	props:['data'],
 	data () {
 		return {
 
+		}
+	},
+	computed:{
+		status:function(){
+           var s = this.data.goodsStatus;
+           var text = "";
+           if(s == "0"){
+             text = "待付款"
+           }
+			return  text;
 		}
 	}
 }

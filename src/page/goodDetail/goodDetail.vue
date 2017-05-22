@@ -9,30 +9,22 @@
 			 <swiper loop  :list="imglist"></swiper>	
 		</div>
 		<div class="goodDetailMsg">
-			<span class="goodDetailTitle">{{title}}</span>
-			<span class="goodDetailMoney">￥{{price}}</span>
+			<span class="goodDetailTitle">{{dataItem.goodsType}}</span>
+			<span class="goodDetailMoney">￥{{dataItem.price}}</span>
 		</div>
 		<p class="goodDetailB">包邮</p>
+    <p class="discribe">描述:&nbsp;&nbsp;{{dataItem.goodsName}}</p>
 		<div class="goodDetailMsgItem">
-			<img :src="item.img" alt="" v-for="item in imglist">
+			<img :src="baseURI+dataItem.imgUrl" alt="" >
 		</div>
-		<div class="goodDetailCollect">￥{{price}} | 加入到购物车</div>
+		<div class="goodDetailCollect" @click="collect(dataItem.goodsId)">￥{{dataItem.price}} | 加入到购物车</div>
 		</div>
 	</div>
 </template>
 
 <script >
 import { Swiper } from 'vux'
-const baseList = [{
-  url: 'http://m.baidu.com',
-  img: 'https://static.vux.li/demo/1.jpg'
-}, {
-  url: 'http://m.baidu.com',
-  img: 'https://static.vux.li/demo/2.jpg'
-}, {
-  url: 'jhttp://m.baidu.com',
-  img: 'https://static.vux.li/demo/3.jpg'
-}]
+var params;
  export default {
  	components:{Swiper},
  	name:'goodDetail',
@@ -40,17 +32,57 @@ const baseList = [{
  		return {
  			title:'零食',
  			price:'169',
- 			imglist:baseList
-
+ 			imglist:[],
+      baseURI:'../../static/picture/',
+      dataItem:{}
  		}
  	},
+  methods:{
+    collect:function (goodsId){
+      var self = this;
+      this.$http.get('api/goods/collect',{
+        params:{
+          goodsId:goodsId
+        }
+      }).then(function (results){
+        if(results.data){
+            self.$router.push('shop');
+        } else {
+         self.$router.push('login');
+        }
+      })
+    }
+  },
+  mounted:function(){
+    var self = this;
+    params = geturl(window.location.search);
+    this.$http.get('api/goods/goodsDetail',{
+      params:{
+        goodsId:params.goodsid
+      }
+    }).then(function (results) {
+      self.dataItem = results.data[0];
+      var img =
+      self.imglist.push({
+        img:'../../static/picture/'+results.data[0].imgUrl
+      });
+    })
+  }
+ }
+
+ //分解url
+ var geturl = function (url){
+   var p = {};
+   var arr = url.substring(1).split('&');
+     for(var i = 0;i < arr.length;i++){
+        var a = arr[i].split("=");
+        p[a[0]] = a[1];
+     }
+   return p
  }
 </script>
 
 <style lang="less">
-  #goodDetail{
-     margin: 0.5rem;
-  }
   header{
   	position: fixed;
   	top:0;
@@ -88,7 +120,12 @@ const baseList = [{
  	text-align: right;
  	border-top: 1px solid #ddd;
  }
+ .discribe{
+  text-align: left;
+  margin-left: 0.5rem;
+ }
  .goodDetailMsgItem{
+  margin: 0.5rem;
  	>img{
  		width: 100%;
  		border-radius: 5px;

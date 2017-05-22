@@ -10,9 +10,10 @@
            {{status}}
          </div>
          <div class="detailStatusPic1">
-           <img src="../../../static/imags/shipped.png"  v-if="status=='已发货'"/>
-           <img src="../../../static/imags/notshipped.png"  v-if="status=='未发货'" />
-           <img src="../../../static/imags/success.png"  v-if="status=='交易成功'"/>
+           <img src="../../../static/imags/shipped.png"  v-if="status=='0'"/>
+           <img src="../../../static/imags/shipped.png"  v-if="status=='1'"/>
+           <img src="../../../static/imags/notshipped.png"  v-if="status=='2'" />
+           <img src="../../../static/imags/success.png"  v-if="status=='3'"/>
          </div>
       </div>
 
@@ -22,64 +23,135 @@
          </div>
 
          <div class="detailAdsInfo">
-           <div class="detailAdsName">收货人：{{name}}</div>
-           <div class="detailAdsPhone">{{phone}}</div>
+           <div class="detailAdsName">收货人：{{address.user}}</div>
+           <div class="detailAdsPhone">{{address.telPhone}}</div>
          </div>
 
          <div class="detailAdsTxt">
-         收货地址：{{address}}
+         收货地址：{{address.address}}
          </div>
       </div>
 
       <div class="detailShop">
         <div class="detailShopPic">
-          <img :src="imgurl" />
+          <img :src="baseURI+items.imgUrl" />
          </div>
 
          <div class="detailShopInfo">
-           <div class="detailShopName">{{shopName}}</div>
-           <div class="detailShopPhone">￥{{shopPrice}}</div>
+           <div class="detailShopName">{{items.goodsName}}</div>
+           <div class="detailShopPhone">￥{{items.goodsPrice}}</div>
          </div>
 
          <div class="detailShopInfo">
            <div class="detailShopName">数量：</div>
-           <div class="detailShopPhone">x{{shopNum}}</div>
+           <div class="detailShopPhone">x{{items.goodsNum}}</div>
          </div>
       </div>
       <div class="detailBtnPart">
-        <input type="button" :value="status" class="detailBtn"/>
+        <input type="button" :value="status2" class="detailBtn" @click="showPlugin"/>
       </div>
 
       <div class="detailOrder">
-        <div class="detailOrderPic"><img src="../../../static/imags/xiadan.png" /></div>
-        <div class="detailOrderTime">订单时间：{{time}}</div>
+       <!--  <div class="detailOrderPic"><img src="../../../static/imags/xiadan.png" /></div> -->
+        <div class="detailOrderTime">订单号：{{items.orderNum}}</div>
+        <div class="detailOrderTime">订单时间：{{items.orderTime}}</div>
+        <div class="detailOrderTime">总价：{{items.orderTotalPrice}} RMB</div>
       </div>
-
-      
+      <toast v-model="showT" type="text" :time="1000" is-show-mask v-bind:text="toastText"></toast>
+      <div v-transfer-dom>
+        <confirm v-model="show"
+        :title="title"
+        @on-cancel="onCancel"
+        @on-confirm="onConfirm"
+        @on-show="onShow"
+        @on-hide="onHide">
+        <p style="text-align:center;">{{msgBox}}</p>
+      </confirm>
+    </div>
   </div>
 </template>
 
 <script type="text/javascript">
+import { Confirm,Toast,TransferDomDirective as TransferDom } from 'vux'
 export default {
+  directives:{
+    TransferDom
+  },
+  components:{Toast,Confirm},
   name: 'detail',
   data () {
     return {
       title:'订单详情',
-      status:'已发货',
-      name:'卢海涛',
-      phone:'13888888888',
-      address:'湖北省武汉市江夏区阳光大道一号',
-      imgurl:'../../../static/imags/yifu/y1.jpg',
-      shopName:'这是衣服这是衣服',
-      shopNum:'1',
-      shopPrice:'99',
-      time:'2017-5-17 17:48:32'
+      baseURI:'../../static/picture/',
+      items:{},
+      address:{},
+      showT:false,
+      toastText:'',
+      status2:'',
+      show:false,
+      msgBox:'去付款'
+    }
+  },
+  computed:{
+    status:function(){
+      var s = this.items.orderStatus;
+      var text = "";
+      if (s == "0"){
+         text = "待付款";
+         this.status2 = '付款';
+      } 
+      if (s == '1'){
+        text = '待发货';
+        this.status2 = '卖家未发货';
+      }
+      if (s == '2'){
+        text == '待收货';
+        this.status2 = '收货';
+      }
+      if (s == '3'){
+        text == '交易成功';
+        this.status2 = '';
+      }
+      return text;
     }
   },
   methods:{
     back:function(){
       this.$router.back(-1);
+    },
+    onCancel () {
+      console.log('on cancel')
+    },
+    onConfirm () {
+      var self = this;
+      this.$http.post('api/order/pay',{
+        totalMoney: self.items.orderTotalPrice
+      }).then(function (results){
+
+      })
+    },
+    onHide () {
+      console.log('on hide')
+    },
+    onShow () {
+      console.log('on show')
+    },
+    showPlugin () {
+      console.log(this.status2);
+      if(this.status2 == "付款"){
+        this.msgBox = "付款"+this.items.orderTotalPrice+"元";
+      } else{
+        this.msgBox = this.status2;
+      }
+       this.show = true;
     }
+  },
+  mounted:function (){
+    var self = this;
+    this.$http.get('api/order/orderDetail').then(function (results){
+          self.items = results.data[0];
+          self.address = results.data[1];
+    })
   }
 }
 </script>
@@ -153,6 +225,7 @@ export default {
     }
   }
 .detailAdsTxt{
+  text-align: left;
   width:15rem;
   float:left;
 }
@@ -195,6 +268,7 @@ export default {
   background:white;
 }
 .detailBtn{
+  outline: none;
   width:4rem;
   height:1.5rem;
   background:white;
@@ -220,6 +294,8 @@ export default {
     }
 }
 .detailOrderTime{
-  line-height:3rem;
+  margin-left: 1rem;
+  line-height:2rem;
+  text-align: left;
 }
 </style>

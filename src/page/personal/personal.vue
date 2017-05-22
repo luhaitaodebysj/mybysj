@@ -14,6 +14,8 @@
 
 		<div class="optionList">
            <group>
+           	<cell is-link title="查看上架商品" link="putGoodsList" value-align="left">
+           	</cell>
            	<cell is-link title="账户余额:" link="order" value-align="left" :value="money">
            		<img class="iconstyle" slot="icon" src="../../../static/imags/nextMoney.png" >
            	</cell>
@@ -38,7 +40,7 @@
 
 		<div v-transfer-dom >
            <popup v-model="show1" height="100%">
-               <Grounding v-on:close="close"></Grounding>	
+               <Grounding v-on:close="close" v-bind:user="userid"></Grounding>	
            </popup>
         </div>
 		<footbar v-bind:index="index"></footbar>
@@ -62,7 +64,8 @@ export default {
 			show1:false,
 			islogin:false,
 			nickname:'xxx',
-			username:'1111'
+			username:'1111',
+			userid:''
 		}
 	},
 	methods:{
@@ -86,6 +89,7 @@ export default {
 				self.nickname = r[0].nickName;
 				self.username = r[0].userName;
 				self.money = r[0].balance;
+				self.userid = r[0].userId;
 			}
 		}).catch(function (error) {
 			console.log(error);

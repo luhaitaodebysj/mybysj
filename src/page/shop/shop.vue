@@ -5,21 +5,21 @@
 	    	<div class="shopList" v-for="item in items">
 	    		<div class="shopListBox">
 	    			<div class="shoppingImg">
-	    				<img :src="item.imgurl">
+	    				<img :src="baseURI+item.imgUrl">
 	    			</div>
 	    			<div class="shoppingDetail">
 	    				<ul>
-	    					<li class="shoppingDetailName">{{item.title}}</li>
+	    					<li class="shoppingDetailName">{{item.goodsName}}</li>
 	    					<li></li>
 	    					<li class="shoppingDetailNum">    
 	    						<span>数量：x{{item.num}}</span>
-	    						<span>￥{{item.money}}</span>
+	    						<span>￥{{item.goodsPrice}}</span>
 	    					</li>
-	    					<li>
+<!-- 	    					<li>
 	    						<div class="reduce" v-on:click="reduce">-</div>
 	    						<input type="text" class="num" v-model="goodsNum">
 	    						<div class="add" v-on:click="add">+</div>
-	    					</li>
+	    					</li> -->
 	    				</ul>
 	    			</div>		
 	    		</div>
@@ -28,10 +28,10 @@
 
 	    <div class="shopSurePay">
 	    	<div class="shopSurePayLeft">
-	    		<p>共<i>16</i>件商品</p>
-	    		<p>总计￥<i>116.0</i>元</p>
+	    		<p>共<i>{{ totalNum}}</i>件商品</p>
+	    		<p>总计￥<i>{{totalMoney}}</i>元</p>
 	    	</div>
-	    	<div class="shopSurePayRight">
+	    	<div class="shopSurePayRight" @click="confirm">
 	    		提交订单
 	    	</div>
 	    </div>
@@ -51,43 +51,16 @@ export default {
   data () {
     return {
       selected:"主页",
-      totalMoney:0,
-      goodsNum:0,
       title:'数量',
+      baseURI:'../../static/picture/',
       index:1,
-      items:[{
-      	imgurl:'../../../static/imags/book/java.jpg',
-      	title:'自行车',
-      	num:7,
-      	money:555.00
-      },{
-      	imgurl:'../../../static/imags/book/java.jpg',
-      	title:'自行车',
-      	num:7,
-      	money:555.00
-      },{
-      	imgurl:'../../../static/imags/book/java.jpg',
-      	title:'自行车',
-      	num:7,
-      	money:555.00
-      },{
-      	imgurl:'../../../static/imags/book/java.jpg',
-      	title:'自行车',
-      	num:7,
-      	money:555.00
-      },{
-      	imgurl:'../../../static/imags/book/java.jpg',
-      	title:'自行车',
-      	num:7,
-      	money:555.00
-      },{
-      	imgurl:'../../../static/imags/book/java.jpg',
-      	title:'自行车',
-      	num:7,
-      	money:555.00
-      }]
+      items:[],
+      totalNum:0,
+      totalMoney:0,
+      goodsId:0,
     }
-  },methods:{
+  },
+  methods:{
      reduce:function(){
      if(this.goodsNum>0){
      	this.goodsNum--;
@@ -98,6 +71,18 @@ export default {
      },
      add:function(){
         this.goodsNum++;
+     },
+     confirm:function() {
+     	//提交订单
+     	var self = this;
+     	this.$http.post('api/order/create',{
+     		totalPrice:self.totalMoney,
+     		totalNum:self.totalNum,
+     		goodsId:self.goodsId,
+     		orderList:[]
+     	}).then(function (results){
+            self.$router.push("order");
+     	})
      }
   },
   created:function() {
@@ -105,9 +90,19 @@ export default {
   mounted:function() {
   	//当元素渲染出来后
   	setHeight();
+  	var self = this;
+  	this.$http.get('api/goods/shop').then(function (results){
+  		self.items = results.data;
+  		for(var i = 0;i < self.items.length;i++){
+  			self.totalNum += self.items[i].num;
+  			self.totalMoney +=  self.items[i].num*self.items[i].goodsPrice;
+  			self.goodsId = self.items[i].goodsId;
+  		}
+  	}).catch(function (error){
+  		console.log(error);
+  	})
   }
 }
- setHeight();
 </script>
 
 <style lang="less" scoped>
@@ -138,7 +133,8 @@ ul,li{
 	}
 	.shopListBox{
 		width: 100%;
-		height: 7.5rem;
+		height: 7rem;
+		padding: 0.5rem 0;
 		border-radius: 4px;
 		border:1px solid  #ddd;
 
@@ -150,9 +146,11 @@ ul,li{
 		margin-right: 0.75rem;
 		>img{
 			width: 100%;
+			height: 100%;
 		}
 	}
 	.shoppingDetail{
+		height: 6rem;
 		margin-left: 6.75rem;
 		li{
 			height: 1.5rem;
@@ -172,6 +170,7 @@ ul,li{
 			float: left;
 		}
 		span:nth-child(2){
+			margin-right: 0.5rem;
 			float: right;
 			font-size: 15px;
 			color: #b7b8b7;

@@ -1,37 +1,26 @@
 <template>
    <div id="list">
       <div class="listLeft">
-         <div class="tabLeft tabActive">衣服</div>
-         <div class="tabLeft">裤子</div>
-         <div class="tabLeft">鞋子</div>
-         <div class="tabLeft">帽子</div>
-         <div class="tabLeft">手机</div>
-         <div class="tabLeft">零食</div>
+         <div class="tabLeft tabActive" data-type="yf" @click="tabchange($event)">衣服</div>
+         <div class="tabLeft" data-type="sj" @click="tabchange($event)">书籍</div>
+         <div class="tabLeft" data-type="sm" @click="tabchange($event)">数码</div>
+         <div class="tabLeft" data-type="ls" @click="tabchange($event)">零食</div>
+         <div class="tabLeft" data-type="ot" @click="tabchange($event)">其他</div>
       </div>
       <div class="listRight">
           <div class="listContentPart" style="display:block;">
-               <div class="listCommodityPart" v-for="item in items">
-                   <div class="listCommodityPic"><img :src="item.imgurl" class="listPic"/></div>
-                   <div class="listCommodityTxt">{{item.title}}</div>
-                   <div class="listCommodityPrice">￥{{item.money}}</div>
+               <div class="listCommodityPart" v-for="item in goodsList">
+                   <div class="listCommodityPic"><img :src="baseURI+item.imgUrl" class="listPic"/></div>
+                   <div class="listCommodityTxt">{{item.goodsName | formatTitle }}</div>
+                   <div class="listCommodityPrice">￥{{item.price}}</div>
                </div>
           </div>
-          <div class="listContentPart">
-               <div class="listCommodityPart" v-for="item in items2">
-                   <div class="listCommodityPic"><img :src="item.imgurl" class="listPic"/></div>
-                   <div class="listCommodityTxt">{{item.title}}</div>
-                   <div class="listCommodityPrice">￥{{item.money}}</div>
-               </div>
-          </div>
-          <div class="listContentPart">3</div>
-          <div class="listContentPart">4</div>
-          <div class="listContentPart">5</div>
-          <div class="listContentPart">6</div>
       </div>
       <footbar></footbar>
    </div>
 </template>
 <script type="text/javascript">
+import Vue from 'vue'
 import Footbar from '../../components/Footbar.vue'
 function setWidth(){
     var listRightWidth = $(document).width() - $(".listLeft").width();
@@ -46,70 +35,51 @@ export default {
   components:{Footbar},
   data () {
     return {
-      items:[{
-        imgurl:'../../../static/imags/yifu/y1.jpg',
-        title:'日系男女连帽',
-        money:60.00
-      },{
-        imgurl:'../../../static/imags/yifu/y1.jpg',
-        title:'日系男女连帽',
-        money:60.00
-      },{
-        imgurl:'../../../static/imags/yifu/y1.jpg',
-        title:'日系男女连帽',
-        money:60.00
-      },{
-        imgurl:'../../../static/imags/yifu/y1.jpg',
-        title:'日系男女连帽',
-        money:60.00
-      },{
-        imgurl:'../../../static/imags/yifu/y1.jpg',
-        title:'日系男女连帽',
-        money:60.00
-      },{
-        imgurl:'../../../static/imags/yifu/y1.jpg',
-        title:'日系男女连帽',
-        money:60.00
-      }],
-      items2:[{
-        imgurl:'../../../static/imags/yifu/y2.jpg',
-        title:'日系男女连帽',
-        money:60.00
-      },{
-        imgurl:'../../../static/imags/yifu/y2.jpg',
-        title:'日系男女连帽',
-        money:60.00
-      },{
-        imgurl:'../../../static/imags/yifu/y2.jpg',
-        title:'日系男女连帽',
-        money:60.00
-      },{
-        imgurl:'../../../static/imags/yifu/y2.jpg',
-        title:'日系男女连帽',
-        money:60.00
-      },{
-        imgurl:'../../../static/imags/yifu/y2.jpg',
-        title:'日系男女连帽',
-        money:60.00
-      },{
-        imgurl:'../../../static/imags/yifu/y2.jpg',
-        title:'日系男女连帽',
-        money:60.00
-      }]
+      baseURI:'../../static/picture/',
+      goodsList:[],
+      type:'yf'
     }
   },
-  mounted:function() {
+  methods:{
+    tabchange:function (e) {
+      var self = this;
+      var tab = e.target;
+      var type = '';
+      $('.listLeft .tabLeft').removeClass('tabActive');
+      $(tab).addClass('tabActive');
+      type = $(tab).attr("data-type");
+      this.$http.get('api/home/more',{
+        params:{
+          type:type
+        }
+      }).then(function (results){
+       self.goodsList = results.data;
+     })
+    }
+  },
+  mounted:function () {
   	//当元素渲染出来后
   	setWidth();
-
-    $('.listLeft .tabLeft').click(function(){
-      $('.listLeft .tabLeft').removeClass('tabActive');
-      $(this).addClass('tabActive');
-      $(".listRight .listContentPart").hide().eq($(this).index()).show();
-    });
+    var self = this;
+    this.$http.get('api/home/more',{
+      params:{
+        type:self.type
+      }
+    }).then(function (results){
+       self.goodsList = results.data;
+    })
   }
 }
 
+//定义过滤器
+Vue.filter('formatTitle', function (value, maxwidth) {
+    maxwidth = maxwidth||8;
+    value = value||"";
+    if(value.length>0 && value.length > maxwidth){
+      value =  value.substring(0,maxwidth)+'...';
+    }
+    return value;
+  });
 
 </script>
 

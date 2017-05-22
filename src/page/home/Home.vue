@@ -5,7 +5,7 @@
    </div>
    <div id="body">
     <Baner></Baner>
-    <Recommd></Recommd>
+    <Recommd v-bind:data="items"></Recommd>
     <div>
        <a href="list">更多商品</a>
     </div>
@@ -20,14 +20,24 @@ import Baner  from '../../components/Baner.vue'
 import Footbar from '../../components/Footbar.vue'
 import Recommd from '../../components/recommd.vue'
 export default {
+  components:{Search,Baner,Footbar,Recommd},
   name: 'home',
   data () {
     return {
       selected:"主页",
-      index:0
+      index:0,
+      items:[]
     }
   },
-  components:{Search,Baner,Footbar,Recommd}
+  created:function(){
+    console.log("created")
+  },
+  mounted:function(){
+    var self = this;
+    this.$http.get('api/home/goods').then(function (results){
+      self.items = results.data;
+    })
+  }
 }
 </script>
 

@@ -51,7 +51,7 @@ export default {
           'Content-Type':'application/json'
         }
       }).then(function(res){
-        if(res.data){
+        if(res){
           //登录成功后就跳转到上一个页面;
           me.$router.push('home');
         }

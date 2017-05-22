@@ -6,39 +6,49 @@
         <span>推荐</span>
       </div>
       <div class="recommdFirst">
-        <a :href="goodDetail"><img src="../assets/imags/iphone_5s-005.jpg" ></a>
+        <a :href="baseDetailUrl+data[4].goodsId">
+          <img :src="baseURI+data[4].imgUrl" >
+        </a>
         <div class="recFirstDsc">
          <p class="recFirstDsc-title">
-           苹果5
+          {{data[4].goodsType}}
          </p>
          <p class="recFirstDsc-price">
-          ￥998.00
+          ￥{{data[4].price}}
         </p>
         </div>
       </div>
       <div class="recommdOther">
         <div class="recommdOtherOne">
           <div class="recommdOtherOne-1">
-            <a href="javascript:void(0)"></a>
-            <span>书籍</span>
-            <span class="recommdOtherPrice">￥111.00</span>
+            <a href="javascript:void(0)">
+              <img :src="baseURI+data[0].imgUrl">
+            </a>
+            <span>{{data[0].goodsType}}</span>
+            <span class="recommdOtherPrice">￥{{data[0].price}}</span>
          </div>
          <div class="recommdOtherOne-2">
-           <a href="javascript:void(0)"></a>
-           <span>自行车</span>
-           <span class="recommdOtherPrice">￥111.00</span>
+           <a href="javascript:void(0)">
+             <img :src="baseURI+data[1].imgUrl">
+           </a>
+           <span>{{data[1].goodsType}}</span>
+           <span class="recommdOtherPrice">￥{{data[1].price}}</span>
          </div>
        </div>
        <div class="recommdOtherTwo">
         <div class="recommdOtherTwo-1">
-         <a href="javascript:void(0)"></a>
-         <span>零食</span>
-         <span class="recommdOtherPrice">￥111.00</span>
+         <a href="javascript:void(0)">
+           <img :src="baseURI+data[2].imgUrl">
+         </a>
+         <span>{{data[2].goodsType}}</span>
+         <span class="recommdOtherPrice">￥{{data[2].price}}</span>
        </div>
        <div class="recommdOtherTwo-2">
-         <a href="javascript:void(0)"></a>
-         <span>衣服</span>
-         <span class="recommdOtherPrice">￥111.00</span>
+         <a href="javascript:void(0)">
+           <img :src="baseURI+data[3].imgUrl">
+         </a>
+         <span>{{data[3].goodsType}}</span>
+         <span class="recommdOtherPrice">￥{{data[3].price}}</span>
        </div>
      </div>
       </div>
@@ -49,18 +59,22 @@
 <script>
 export default {
   name: 'hello',
+  props:['data'],
   data () {
     return {
       msg: 'Welcome to Your Vue.js App',
       SearchBackground:'search-background',
-      goodDetail:'goodDetail'
+      goodDetail:'goodDetail',
+      baseURI:'../../static/picture/',
+      baseDetailUrl:'goodDetail?goodsid='
     }
+  },
+  mounted:function(){
   }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="less">
+<style lang="less" scoped>
   .recommdOut{
     padding: 0.5rem;
     border: 1px solid #ddd;
@@ -114,6 +128,10 @@ export default {
       display: inline-block;
       box-sizing: border-box;
       padding: 0.4rem;
+      >img{
+        width: 100%;
+        height: 100%;
+      }
     } 
     span{
       font-size: 16px;
@@ -132,36 +150,12 @@ export default {
       text-align: left;
     }
   }
-  .recommdOtherOne-1{
-    a{
-      background: url("../../static/imags/book/java.jpg");
-      background-size: 100% 100%;
-    }
-  }
-  .recommdOtherOne-2{
-    a{
-      background: url("../../static/imags/car/car.jpg");
-      background-size: 100% 100%;
-    }
-  }
   .recommdOtherTwo{
     div{
       display: inline-block;
       width: 50%;
       padding: 0.5rem;
       text-align: left;
-    }
-  }
-  .recommdOtherTwo-1{
-    a{
-      background: url("../../static/imags/food/foods1.jpg");
-      background-size: 100% 100%;
-    }
-  }
-  .recommdOtherTwo-2{
-    a{
-      background: url("../../static/imags/yifu/yifu1.jpg");
-      background-size: 100% 100%;
     }
   }
 </style>
