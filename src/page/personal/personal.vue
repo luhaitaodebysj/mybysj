@@ -16,7 +16,7 @@
            <group>
            	<cell is-link title="查看上架商品" link="putGoodsList" value-align="left">
            	</cell>
-           	<cell is-link title="账户余额:" link="order" value-align="left" :value="money">
+           	<cell is-link title="账户余额:"  value-align="left" :value="money">
            		<img class="iconstyle" slot="icon" src="../../../static/imags/nextMoney.png" >
            	</cell>
            	<cell is-link title="全部订单" link="order" value-align="left">

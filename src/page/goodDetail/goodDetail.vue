@@ -45,10 +45,13 @@ var params;
           goodsId:goodsId
         }
       }).then(function (results){
-        if(results.data){
-            self.$router.push('shop');
+        if(results.data =="no"){
+            alert('不能买自己的东西');
+            self.$router.push('putGoodsList');
+        } else if(results.data){
+           self.$router.push('shop');
         } else {
-         self.$router.push('login');
+          self.$router.push('login');
         }
       })
     },
@@ -64,11 +67,13 @@ var params;
         goodsId:params.goodsid
       }
     }).then(function (results) {
-      self.dataItem = results.data[0];
-      var img =
-      self.imglist.push({
-        img:'../../static/picture/'+results.data[0].imgUrl
-      });
+      if(results.data){
+        self.dataItem = results.data[0];
+        var img =
+        self.imglist.push({
+          img:'../../static/picture/'+results.data[0].imgUrl
+        });
+      }
     })
   }
  }

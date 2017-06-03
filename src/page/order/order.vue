@@ -11,7 +11,7 @@
         </swiper-item>
       </swiper> -->
       <div>
-        <OrderList v-for="item in items" v-bind:data="item" v-show="nowStatus == item.goodsStatus || nowStatus == '4'"></OrderList>
+        <OrderList v-for="item in items" v-bind:data="item" v-show="nowStatus == item.goodsStatus || nowStatus == '5'"></OrderList>
       </div>
       <footbar v-bind:index="footbarIndex"></footbar>
   </div>
@@ -31,7 +31,7 @@ export default {
       list2:list(),
       content2:content(),
       index:0,
-      nowStatus:'4',
+      nowStatus:'5',
       footbarIndex:2,
       items:[]
     }
@@ -39,10 +39,10 @@ export default {
   methods:{
    change:function(tab){
      switch (tab) {
-      case "全部订单":this.nowStatus = "4";console.log(this.nowStatus);break;
-      case "待付款":this.nowStatus = '1';console.log(this.nowStatus);break;
-      case "待发货":this.nowStatus = '2';console.log(this.nowStatus);break;
-      case "待收货":this.nowStatus = '3';console.log(this.nowStatus);break;
+      case "全部订单":this.nowStatus = "5";console.log(this.nowStatus);break;
+      case "待付款":this.nowStatus = '2';console.log(this.nowStatus);break;
+      case "待发货":this.nowStatus = '3';console.log(this.nowStatus);break;
+      case "待收货":this.nowStatus = '4';console.log(this.nowStatus);break;
      }
    }
   },

@@ -1,8 +1,8 @@
 <template>
   <div class="home" id="home">
-    <div id="header">
+<!--     <div id="header">
      <Search></Search>
-   </div>
+   </div> -->
    <div id="body">
     <Baner></Baner>
     <Recommd v-bind:data="items"></Recommd>

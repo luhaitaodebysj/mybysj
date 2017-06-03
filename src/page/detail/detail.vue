@@ -10,10 +10,10 @@
            {{status2}}
          </div>
          <div class="detailStatusPic1">
-           <img src="../../../static/imags/shipped.png"  v-if="status=='1'"/>
            <img src="../../../static/imags/shipped.png"  v-if="status=='2'"/>
-           <img src="../../../static/imags/notshipped.png"  v-if="status=='3'" />
-           <img src="../../../static/imags/success.png"  v-if="status=='4'"/>
+           <img src="../../../static/imags/shipped.png"  v-if="status=='3'"/>
+           <img src="../../../static/imags/notshipped.png"  v-if="status=='4'" />
+           <img src="../../../static/imags/success.png"  v-if="status=='5'"/>
          </div>
       </div>
 
@@ -48,7 +48,7 @@
          </div>
       </div>
       <div class="detailBtnPart">
-        <input type="button" :value="status2" class="detailBtnLeft" @click="showPlugin" v-if="items.goodsStatus =='1' || items.goodsStatus=='3'"/>
+        <input type="button" :value="status2" class="detailBtnLeft" @click="showPlugin" v-if="items.goodsStatus =='2' || items.goodsStatus=='4'"/>
         <input type="button" :value="status2" class="detailBtn"/>
       </div>
 
@@ -96,19 +96,19 @@ export default {
     status:function(){
       var s = this.items.goodsStatus;
       var text = "";
-      if (s == "1"){
+      if (s == "2"){
          text = "待付款";
          this.status2 = '付款';
       } 
-      if (s == '2'){
+      if (s == '3'){
         text = '待发货';
         this.status2 = '卖家未发货';
       }
-      if (s == '3'){
+      if (s == '4'){
         text == '待收货';
         this.status2 = '收货';
       }
-      if (s == '4'){
+      if (s == '5'){
         text == '交易成功';
         this.status2 = '交易成功';
       }
@@ -125,7 +125,7 @@ export default {
     onConfirm () {
       var self = this;
       var s = this.items.goodsStatus;
-      if( s == "1"){
+      if( s == "2"){
         this.$http.post('api/order/pay',{
           totalMoney: self.items.orderTotalPrice,
           goodsId:self.items.goodsId,
@@ -137,7 +137,7 @@ export default {
             self.$router.push('order');
           }
         })
-      } else if(s == '3'){
+      } else if(s == '4'){
         this.$http.get('api/order/take',{
           params:{
              goodsId:self.items.goodsId,
@@ -168,12 +168,32 @@ export default {
   },
   mounted:function (){
     var self = this;
-    this.$http.get('api/order/orderDetail').then(function (results){
+    var param = geturl(window.location.search);
+    this.$http.get('api/order/orderDetail',{
+      params:{
+        goodsId:param.goodsId
+      }
+    }).then(function (results){
           self.items = results.data[0];
           self.address = results.data[1];
     })
+  },
+  destroyed:function (){
+    console.log(111);
+    this.items = {};
   }
 }
+
+ //分解url
+ var geturl = function (url){
+   var p = {};
+   var arr = url.substring(1).split('&');
+     for(var i = 0;i < arr.length;i++){
+        var a = arr[i].split("=");
+        p[a[0]] = a[1];
+     }
+   return p
+ }
 </script>
 
 <style  scoped lang="less">

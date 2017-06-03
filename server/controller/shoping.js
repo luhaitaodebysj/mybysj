@@ -38,7 +38,11 @@ var goodsDetail = function (goodsId,callback){
 var collect = function (goodsId,userId,num,callback){
   var sql = 'INSERT INTO shopping_list (userId) VALUES(?)';
   var param = [userId];
-  db.query(sql,param,function (error,results,fields){
+  db.query('select supplierId from goods_list where goodsId = '+goodsId,function (error,results4,fields){
+    console.log("|||||");
+    console.log(results4);
+    if(results4[0].supplierId != userId){
+        db.query(sql,param,function (error,results,fields){
      var cartId = results.insertId;  
      var s = 'SELECT * from goods_list WHERE goodsId = '+goodsId;
      db.query(s,function (error,results2,fields){
@@ -48,6 +52,11 @@ var collect = function (goodsId,userId,num,callback){
         })
      })
   })
+    } else {
+      callback("no");
+    }
+  })
+
 }
 
 var showCollect = function (userId,callback){

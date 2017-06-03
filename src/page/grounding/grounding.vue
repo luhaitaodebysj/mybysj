@@ -91,10 +91,6 @@
                 var me = this;
                 var arr = [];
                 var data = me.sureimgname;
-                // for(var i=0;i<data.length;i++){
-                //     var p = data[i].split("")
-                //     arr.push()
-                // }
                 var data = {
                     userid: me.user,
                     title: me.title,
@@ -119,7 +115,7 @@
                           me.imglist = [];
                           me.price = 0;
                           me.inventory = 1;
-                          me.$emit("close");
+                          me.$emit("close");  
                          }
                     }).catch(function (error) {
                         console.log(error);

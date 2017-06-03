@@ -104,7 +104,7 @@ var storage = multer.diskStorage({
       storage: storage
 });
 
-apiRouter.post('/goods/put', upload.single('goodsimg'), function (req, res, next) {
+apiRouter.post('/goods/put', upload.single('goodsimg'), function (req, res,next) {
   res.send(req.file.filename)
 })
 
@@ -158,7 +158,6 @@ apiRouter.get('/goods/collect',function (req,res){
     var goodsId = req.query.goodsId;
     var userId = req.session.user.userId;
     var num = 1;
-    console.log("userid"+userId);
     goods.collect(goodsId,userId,num,function (results){
      res.send(results);
    })
@@ -221,8 +220,14 @@ apiRouter.get('/order/orderList',function (req,res){
 apiRouter.get('/order/orderDetail',function (req,res){
    if(req.session.user){
     var userId = req.session.user.userId;
-    order.getOrderList(userId,function (results){
+    var goodsId = req.query.goodsId;
+    console.log("goodsId"+goodsId);
+    order.getorderDetail(userId,goodsId,function (results){
      user.getAddress(userId,function (results2){
+      console.log('----')
+      console.log(results);
+      console.log('++++');
+      console.log(results2);
        var arr =[results[0],results2[0]];
        res.send(arr);
      })

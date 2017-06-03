@@ -18,7 +18,7 @@
 					{{data.goodsName}}
 				</li>
 				<li class="orderDetail">
-					<a class="check" href="detail" >查看订单详情</a>
+					<a class="check" :href="'detail?goodsId='+data.goodsId" >查看订单详情</a>
 				</li>
 			</ul>
 		</div>
@@ -36,13 +36,14 @@ export default {
 	computed:{
 		status:function(){
            var s = this.data.goodsStatus;
+           console.log(this.data);
            var text = "";
-           if(s == "1"){
+           if(s == "2"){
              text = "待付款"
            }
-           if(s == '2') text ="待发货";
-           if(s == '3') text ="待收货";
-           if(s == '4') text ="交易成功";
+           if(s == '3') text ="待发货";
+           if(s == '4') text ="待收货";
+           if(s == '5') text ="交易成功";
 			return  text;
 		}
 	}
